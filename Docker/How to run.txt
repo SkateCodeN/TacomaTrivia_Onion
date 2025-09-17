@@ -1,0 +1,12 @@
+# Build the image
+docker build -t tacoma-postgres .
+
+# Create a persistent volume for data
+docker volume create tacoma_pg
+
+# Run: map host 9000 → container 5432, inject env from file
+docker run -d --name tacoma-db \
+  --env-file ./.env \
+  -p 9000:5432 \
+  -v tacoma_pg:/var/lib/postgresql/data \
+  tacoma-postgres
