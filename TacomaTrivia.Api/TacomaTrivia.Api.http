@@ -1,0 +1,6 @@
+@TacomaTrivia.Api_HostAddress = http://localhost:5067
+
+GET {{TacomaTrivia.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
