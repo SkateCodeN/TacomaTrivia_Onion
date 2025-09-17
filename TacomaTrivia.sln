@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TacomaTrivia.Domain", "TacomaTrivia.Domain\TacomaTrivia.Domain.csproj", "{66757BB8-81A2-4AB8-8C3F-2BCF1BB5AD56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TacomaTrivia.Application", "TacomaTrivia.Application\TacomaTrivia.Application.csproj", "{284949CA-F28D-49E7-BAB6-F2D53D629239}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TacomaTrivia.Infrastructure", "TacomaTrivia.Infrastructure\TacomaTrivia.Infrastructure.csproj", "{A34C903A-9836-48EE-99CD-1B1E8B6A8AAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TacomaTrivia.Api", "TacomaTrivia.Api\TacomaTrivia.Api.csproj", "{476F785B-1883-4E68-80B7-A2000244F7E1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66757BB8-81A2-4AB8-8C3F-2BCF1BB5AD56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66757BB8-81A2-4AB8-8C3F-2BCF1BB5AD56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66757BB8-81A2-4AB8-8C3F-2BCF1BB5AD56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66757BB8-81A2-4AB8-8C3F-2BCF1BB5AD56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{284949CA-F28D-49E7-BAB6-F2D53D629239}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{284949CA-F28D-49E7-BAB6-F2D53D629239}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{284949CA-F28D-49E7-BAB6-F2D53D629239}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{284949CA-F28D-49E7-BAB6-F2D53D629239}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A34C903A-9836-48EE-99CD-1B1E8B6A8AAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A34C903A-9836-48EE-99CD-1B1E8B6A8AAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A34C903A-9836-48EE-99CD-1B1E8B6A8AAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A34C903A-9836-48EE-99CD-1B1E8B6A8AAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{476F785B-1883-4E68-80B7-A2000244F7E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{476F785B-1883-4E68-80B7-A2000244F7E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{476F785B-1883-4E68-80B7-A2000244F7E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{476F785B-1883-4E68-80B7-A2000244F7E1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
