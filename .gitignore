@@ -1,0 +1,53 @@
+# --- .NET / VS ---
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+*.csproj.user
+.vs/
+*.pidb
+*.svclog
+*.ide/
+TestResults/
+*.nupkg
+*.snk
+
+# EF Core
+Migrations/**/obj/
+Migrations/**/bin/
+
+# --- Node / Vite ---
+node_modules/
+dist/
+.vite/
+*.log
+pnpm-lock.yaml
+yarn.lock
+# keep exactly one lockfile type you actually use
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# --- OS / Editor ---
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# --- Docker ---
+**/.docker-build/
+**/.tmp/
+
+# --- Coverage ---
+coverage/
+*.coverlet.*
+
+
+Ignoredappsettings.json
