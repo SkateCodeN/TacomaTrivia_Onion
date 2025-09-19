@@ -14,15 +14,6 @@ jobs:
         with: { dotnet-version: '8.0.x'}
       - run: dotnet restore
       - run: dotnet build --configuration Release --no-restore -warnaserror
-      - run: dotnet test ./TacomaTrivia.UnitTests/TacomaTrivia.UnitTests.csproj --configuration Release --no-build -v minimal 
-  build-and-test:
-    runs-on: [self-hosted,Windows, Stage]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
-        with: {dotnet-version: '8.0.x'}
-      - name: Restore
-        run: dotnet Restore
-      - name: build
-        run: dotnet build -c Release --no-restore
+      - run: dotnet test ./TacomaTrivia.UnitTests/TacomaTrivia.UnitTests.csproj -c Release  -v minimal 
+  
     
