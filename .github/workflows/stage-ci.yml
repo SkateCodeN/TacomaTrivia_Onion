@@ -14,7 +14,7 @@ jobs:
         with: { dotnet-version: '8.0.x'}
       - run: dotnet restore
       - run: dotnet build --configuration Release --no-restore -warnaserror
-      - run: dotnet test ./TacomaTrivia.UnitTests/TacomaTrivia.UnitTests.csproj --no-build -v minimal 
+      - run: dotnet test ./TacomaTrivia.UnitTests/TacomaTrivia.UnitTests.csproj --configuration Release --no-build -v minimal 
   build-and-test:
     runs-on: [self-hosted,Windows, Stage]
     steps:
