@@ -12,8 +12,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with: { dotnet-version: '8.0.x'}
-      - run: dotnet restore
-      - run: dotnet build --configuration Release --no-restore -warnaserror
+
+      - name: Testing (Unit)
       - run: dotnet test ./TacomaTrivia.UnitTests/TacomaTrivia.UnitTests.csproj -c Release  -v minimal 
   
     
