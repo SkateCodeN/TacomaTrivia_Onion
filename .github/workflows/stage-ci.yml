@@ -10,10 +10,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
+      #This sets up our env for dotnet to download packages etc
+      # targeting the .net 8 version 
       - uses: actions/setup-dotnet@v4
         with: { dotnet-version: '8.0.x'}
-
-      - name: Testing (Unit)
+      # Do our unit tests w
+      - name: Unit Testing
         run: dotnet test ./TacomaTrivia.UnitTests/TacomaTrivia.UnitTests.csproj -c Release  -v minimal 
+
+  integration:
+    runs-on: ubuntu-latest
+    needs: unit
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with: {dotnet-version: '8.0.x'}
+
+      - name: Integration tests
+        run: dotnet test ./TacomaTrivia.IntegrationTests/TacomaTrivia.IntegrationTests.csproj -c Release -v minimal
   
     
