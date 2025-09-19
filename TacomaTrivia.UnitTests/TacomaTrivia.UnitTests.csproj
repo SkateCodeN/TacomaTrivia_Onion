@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\tacomatrivia.Domain\tacomatrivia.Domain.csproj" />
+    <ProjectReference Include="..\TacomaTrivia.Domain\TacomaTrivia.Domain.csproj" />
     <ProjectReference Include="..\TacomaTrivia.Application\TacomaTrivia.Application.csproj" />
   </ItemGroup>
 
