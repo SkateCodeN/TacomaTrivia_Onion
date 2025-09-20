@@ -65,24 +65,28 @@ jobs:
           node-version: '20.x'
 
       # Build your Vite frontend and output directly into the API's wwwroot
-      # NOTE: Change 'frontend' to your actual frontend directory name
-      - name: Build frontend into API wwwroot
-        working-directory: ./tacomatrivia-frontend 
+      - name: Create wwwroot folder if not existing
         run: |
           set "API_WWWROOT=../TacomaTrivia.Api/wwwroot"
           IF NOT EXIST ../TacomaTrivia_Onion/TacomaTrivia.Api/wwwroot\ (
             echo Creating ../TacomaTrivia_Onion/TacomaTrivia.Api/wwwroot
             mkdir "%API_WWWROOT%"
           )
+
+      - name: Build Vite frontend into API wwwroot
+        working-directory: ./tacomatrivia-frontend 
+        run: |
+          set "API_WWWROOT=../TacomaTrivia.Api/wwwroot"
           npm ci
           npm run build -- --outDir "%API_WWWROOT%"
-          IF NOT EXIST ../TacomaTrivia.Api/wwwroot/index.html (
-            echo Contents of ../TacomaTrivia.Api/wwwroot:
-            dir /a ../TacomaTrivia.Api/wwwroot
-            echo FE build did not produce ../TacomaTrivia.Api/wwwroot/index.html
-            exit /b 1
-          )
 
+        rem Sanity: ensure index.html exists after build
+          IF NOT EXIST "%API_WWWROOT%\index.html" (
+            echo Contents of "%API_WWWROOT%":
+            dir /a "%API_WWWROOT%"
+            echo FE build did not produce "%API_WWWROOT%\index.html"
+            exit /b 1
+          ) 
       # ----- Backend publish -----
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
