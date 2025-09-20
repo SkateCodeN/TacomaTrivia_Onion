@@ -82,7 +82,7 @@ jobs:
 
         rem Sanity: ensure index.html exists after build
           IF NOT EXIST "%API_WWWROOT%\index.html" (
-            echo Contents of "%API_WWWROOT%":
+            echo Contents of "%API_WWWROOT%" 
             dir /a "%API_WWWROOT%"
             echo FE build did not produce "%API_WWWROOT%\index.html"
             exit /b 1
