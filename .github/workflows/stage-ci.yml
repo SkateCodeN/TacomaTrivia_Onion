@@ -139,3 +139,6 @@ jobs:
 # stopped tacoma pg db container
 
 #Deleted both images to make sure we get a clean re-install
+
+# all of that may have been for naught as I had the folder open using
+#vs code on that machine
