@@ -81,7 +81,7 @@ jobs:
         working-directory: ./tacomatrivia-frontend 
         run: |
           set "API_WWWROOT=../TacomaTrivia.Api/wwwroot"
-          npm run build --outDir "%API_WWWROOT%"
+          npm run build -- --outDir "%API_WWWROOT%"
 
       # ----- Backend publish -----
       - name: Setup .NET SDK
