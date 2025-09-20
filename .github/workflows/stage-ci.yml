@@ -61,7 +61,7 @@ jobs:
       - name: Build frontend into API wwwroot
         shell: powershell -ExecutionPolicy Bypass 
         run: |
-          cd ./frontend
+          cd ./tacomatrivia-frontend
           npm ci
           # IMPORTANT: Writes output to ../TacomaTrivia.Api/wwwroot
           npm run build -- --outDir ../TacomaTrivia.Api\wwwroot
