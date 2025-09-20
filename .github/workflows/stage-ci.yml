@@ -45,7 +45,7 @@ jobs:
   # Use Windows PowerShell safely; no ExecutionPolicy override; no profile scripts
     defaults:
       run:
-        shell: 'powershell -NoProfile -NonInteractive -Command "{0}"'
+        shell: cmd
 
     steps:
       # Check out fresh copy onto the runner's workspace
@@ -53,11 +53,7 @@ jobs:
         with:
           fetch-depth: 0
           clean: true
-     # Debug: confirm where we are
-      - name: Show workspace (debug)
-        run: |
-          Write-Host "GITHUB_WORKSPACE=$env:GITHUB_WORKSPACE"
-          Get-ChildItem -Force
+     
       # ----- Frontend build -----
       # Installs Node on the Windows box for building the SPA
       - name: Setup Node.js
