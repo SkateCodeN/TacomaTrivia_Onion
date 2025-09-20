@@ -137,3 +137,5 @@ jobs:
 
 #Deleted old container that had this app
 # stopped tacoma pg db container
+
+#Deleted both images to make sure we get a clean re-install
