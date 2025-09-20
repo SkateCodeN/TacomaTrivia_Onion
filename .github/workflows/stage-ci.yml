@@ -73,14 +73,12 @@ jobs:
 
       # ----- Backend publish -----
       - name: Setup .NET SDK
-        working-directory: ./TacomaTrivia.Api
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
       # Publish the API into a local folder we can COPY into the image
       - name: Publish API
-        working-directory: ./TacomaTrivia.Api
         run: |
           dotnet restore ./TacomaTrivia.Api/TacomaTrivia.Api.csproj
           dotnet publish ./TacomaTrivia.Api/TacomaTrivia.Api.csproj -c Release -o .\publish\Api
@@ -88,7 +86,6 @@ jobs:
       # ----- Docker build -----
       # Build a small runtime image using the already published output
       - name: Docker build image
-        working-directory: ./TacomaTrivia.Api
         run: |
           docker build -t tacomatrivia:stage -f ./TacomaTrivia.Api/Dockerfile.runtime .
 
