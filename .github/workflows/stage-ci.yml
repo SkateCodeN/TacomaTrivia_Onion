@@ -67,9 +67,9 @@ jobs:
       # Build your Vite frontend and output directly into the API's wwwroot
       - name: Create wwwroot folder if not existing
         run: |
-          set "API_WWWROOT=../TacomaTrivia.Api/wwwroot"
-          IF NOT EXIST ../TacomaTrivia_Onion/TacomaTrivia.Api/wwwroot\ (
-            echo Creating ../TacomaTrivia_Onion/TacomaTrivia.Api/wwwroot
+          set "API_WWWROOT=./TacomaTrivia.Api/wwwroot"
+          IF NOT EXIST "%API_WWWROOT%" (
+            echo Creating "%API_WWWROOT%"
             mkdir "%API_WWWROOT%"
           )
 
@@ -79,7 +79,7 @@ jobs:
           set "API_WWWROOT=../TacomaTrivia.Api/wwwroot"
           npm ci
           npm run build -- --outDir "%API_WWWROOT%"
-          
+
       # ----- Backend publish -----
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
@@ -95,7 +95,7 @@ jobs:
           )
           dotnet restore ./TacomaTrivia.Api/TacomaTrivia.Api.csproj
           dotnet publish ./TacomaTrivia.Api/TacomaTrivia.Api.csproj -c Release -o .\publish\Api
-          IF NOT EXIST .\publish\Api\wwwroot\index.html (
+          IF NOT EXIST ./publish/Api/wwwroot\index.html (
             echo Publish output tree:
             dir /s /b .\publish\Api
             echo Publish output missing wwwroot\index.html
