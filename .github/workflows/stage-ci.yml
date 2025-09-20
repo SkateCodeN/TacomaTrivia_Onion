@@ -89,7 +89,7 @@ jobs:
       - name: Docker build image
         working-directory: ./TacomaTrivia.Api
         run: |
-          docker build -t tacomatrivia:stage -f ./Dockerfile.runtime .
+          docker build -t tacomatrivia:stage -f ./TacomaTrivia.Api/Dockerfile.runtime .
 
       # ----- Replace running container -----
       - name: Stop old container (ignore if missing)
