@@ -1,0 +1,7 @@
+**
+!publish/**
+!Dockerfile.runtime
+.git
+node_modules
+bin
+obj

@@ -1,0 +1,17 @@
+# A tiny runtime image. We copy the already-published app into it.
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+
+WORKDIR /app
+
+# Copy the published output created by the workflow step into the image
+# (the path "publish/Api" is from the workflow below).
+COPY ./publish/Api ./
+
+# Bind Kestrel to port 5141 in the container
+ENV ASPNETCORE_URLS=http://+:5141
+
+# Expose port for clarity (informational)
+EXPOSE 5141
+
+# Start your API
+ENTRYPOINT ["dotnet", "TacomaTrivia.Api.dll"]
