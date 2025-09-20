@@ -31,5 +31,84 @@ jobs:
         run: dotnet test ./TacomaTrivia.IntegrationTests/TacomaTrivia.IntegrationTests.csproj -c Release -v minimal
   
   #on my pc that has the service, the local account is now running the service
-  
+   # --- 3) Build FE -> wwwroot, publish API, build+run Docker on self-hosted Windows ---
+  deploy:
+    # Match your Windows self-hosted runner labels exactly
+    runs-on: [self-hosted, Windows, Stage]
+    needs: [unit, integration]
+
+    # Grants access to ENV-scoped secrets (set up in Settings → Environments)
+    environment:
+      name: TacomaTrivia_Postgres_ConnectionString
+
+    steps:
+      # Check out fresh copy onto the runner's workspace
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          clean: true
+
+      # ----- Frontend build -----
+      # Installs Node on the Windows box for building the SPA
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      # Build your Vite frontend and output directly into the API's wwwroot
+      # NOTE: Change 'frontend' to your actual frontend directory name
+      - name: Build frontend into API wwwroot
+        shell: pwsh
+        run: |
+          cd .\frontend
+          npm ci
+          # IMPORTANT: Writes output to ../TacomaTrivia.Api/wwwroot
+          npm run build -- --outDir ..\TacomaTrivia.Api\wwwroot
+
+      # ----- Backend publish -----
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      # Publish the API into a local folder we can COPY into the image
+      - name: Publish API
+        shell: pwsh
+        run: |
+          dotnet restore .\TacomaTrivia.Api\TacomaTrivia.Api.csproj
+          dotnet publish .\TacomaTrivia.Api\TacomaTrivia.Api.csproj -c Release -o .\publish\Api
+
+      # ----- Docker build -----
+      # Build a small runtime image using the already published output
+      - name: Docker build image
+        shell: pwsh
+        run: |
+          docker build -t tacomatrivia:stage -f .\Dockerfile.runtime .
+
+      # ----- Replace running container -----
+      - name: Stop old container (ignore if missing)
+        shell: pwsh
+        run: docker rm -f tacomatrivia-stage 2>$null || exit 0
+
+      # Run new container with environment secrets injected at runtime
+      # IMPORTANT:
+      #  - The environment variable name "ConnectionStrings__Default" follows .NET's section__key mapping.
+      #  - Your API should read it via builder.Configuration["ConnectionStrings:Default"].
+      - name: Run container (inject secrets)
+        shell: pwsh
+        env:
+          # Pull the environment-scoped secret into the step's environment
+          DB_CONN: ${{ secrets.STAGE_DB_CONNECTION_STRING }}
+        run: |
+          docker run -d --name tacomatrivia-stage `
+            -p 5141:5141 `
+            --restart unless-stopped `
+            -e "ConnectionStrings__Default=$env:DB_CONN" `
+            tacomatrivia:stage
+
+      # (Optional) Show container status and where the app is listening
+      - name: Verify container
+        shell: pwsh
+        run: |
+          docker ps --filter "name=tacomatrivia-stage"
     
