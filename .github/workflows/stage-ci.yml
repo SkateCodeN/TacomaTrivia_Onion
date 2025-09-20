@@ -67,7 +67,7 @@ jobs:
         working-directory: ./tacomatrivia-frontend 
         run: |
           
-          npm start
+          npm ci
           npm run build -- --outDir ../TacomaTrivia.Api\wwwroot
 
       # ----- Backend publish -----
