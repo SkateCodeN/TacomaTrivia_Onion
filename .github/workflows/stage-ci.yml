@@ -73,12 +73,15 @@ jobs:
             mkdir "%API_WWWROOT%"
           )
 
+      - name: Get Frontend Dependencies
+        working-directory: ./tacomatrivia-frontend 
+        run: npm ci
+
       - name: Build Vite frontend into API wwwroot
         working-directory: ./tacomatrivia-frontend 
         run: |
           set "API_WWWROOT=../TacomaTrivia.Api/wwwroot"
-          npm ci
-          npm run build -- --outDir "%API_WWWROOT%"
+          npm run build --outDir "%API_WWWROOT%"
 
       # ----- Backend publish -----
       - name: Setup .NET SDK
