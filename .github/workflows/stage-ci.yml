@@ -133,4 +133,6 @@ jobs:
       - name: Verify container
         run: |
           docker ps --filter "name=tacomatrivia-stage"
-    
+
+#Deleted old container that had this app
+# stopped tacoma pg db container
