@@ -67,9 +67,18 @@ jobs:
       - name: Build frontend into API wwwroot
         working-directory: ./tacomatrivia-frontend 
         run: |
-          
+          IF NOT EXIST ..\TacomaTrivia.Api\wwwroot\ (
+            echo Creating ..\TacomaTrivia.Api\wwwroot
+            mkdir ..\TacomaTrivia.Api\wwwroot
+          )
           npm ci
           npm run build -- --outDir ../TacomaTrivia.Api/wwwroot
+          IF NOT EXIST ..\TacomaTrivia.Api\wwwroot\index.html (
+            echo Contents of ..\TacomaTrivia.Api\wwwroot:
+            dir /a ..\TacomaTrivia.Api\wwwroot
+            echo FE build did not produce ..\TacomaTrivia.Api\wwwroot\index.html
+            exit /b 1
+          )
 
       # ----- Backend publish -----
       - name: Setup .NET SDK
@@ -80,8 +89,19 @@ jobs:
       # Publish the API into a local folder we can COPY into the image
       - name: Publish API
         run: |
+          IF NOT EXIST .\publish\Api\ (
+            echo Creating .\publish\Api
+            mkdir .\publish\Api
+          )
           dotnet restore ./TacomaTrivia.Api/TacomaTrivia.Api.csproj
           dotnet publish ./TacomaTrivia.Api/TacomaTrivia.Api.csproj -c Release -o .\publish\Api
+          IF NOT EXIST .\publish\Api\wwwroot\index.html (
+            echo Publish output tree:
+            dir /s /b .\publish\Api
+            echo Publish output missing wwwroot\index.html
+            exit /b 1
+          )
+          
 
       # ----- Docker build -----
       # Build a small runtime image using the already published output
