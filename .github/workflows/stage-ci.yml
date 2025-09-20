@@ -41,6 +41,11 @@ jobs:
     # Grants access to ENV-scoped secrets (set up in Settings → Environments)
     environment:
       name: TacomaTrivia_Postgres_ConnectionString
+    
+  # Use Windows PowerShell safely; no ExecutionPolicy override; no profile scripts
+    defaults:
+      run:
+        shell: 'powershell -NoProfile -NonInteractive -Command "{0}"'
 
     steps:
       # Check out fresh copy onto the runner's workspace
@@ -59,7 +64,7 @@ jobs:
       # Build your Vite frontend and output directly into the API's wwwroot
       # NOTE: Change 'frontend' to your actual frontend directory name
       - name: Build frontend into API wwwroot
-        shell: powershell -ExecutionPolicy Bypass 
+        working-directory: ./tacomatrivia-frontend 
         run: |
           cd ./tacomatrivia-frontend
           npm ci
@@ -74,7 +79,6 @@ jobs:
 
       # Publish the API into a local folder we can COPY into the image
       - name: Publish API
-        shell: pwsh
         run: |
           dotnet restore ./TacomaTrivia.Api/TacomaTrivia.Api.csproj
           dotnet publish ./TacomaTrivia.Api/TacomaTrivia.Api.csproj -c Release -o .\publish\Api
@@ -82,13 +86,11 @@ jobs:
       # ----- Docker build -----
       # Build a small runtime image using the already published output
       - name: Docker build image
-        shell: pwsh
         run: |
           docker build -t tacomatrivia:stage -f ./Dockerfile.runtime .
 
       # ----- Replace running container -----
       - name: Stop old container (ignore if missing)
-        shell: pwsh
         run: docker rm -f tacomatrivia-stage 2>$null || exit 0
 
       # Run new container with environment secrets injected at runtime
@@ -96,7 +98,6 @@ jobs:
       #  - The environment variable name "ConnectionStrings__Default" follows .NET's section__key mapping.
       #  - Your API should read it via builder.Configuration["ConnectionStrings:Default"].
       - name: Run container (inject secrets)
-        shell: pwsh
         env:
           # Pull the environment-scoped secret into the step's environment
           DB_CONN: ${{ secrets.STAGE_DB_CONNECTION_STRING }}
@@ -109,7 +110,6 @@ jobs:
 
       # (Optional) Show container status and where the app is listening
       - name: Verify container
-        shell: pwsh
         run: |
           docker ps --filter "name=tacomatrivia-stage"
     
