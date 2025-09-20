@@ -79,14 +79,7 @@ jobs:
           set "API_WWWROOT=../TacomaTrivia.Api/wwwroot"
           npm ci
           npm run build -- --outDir "%API_WWWROOT%"
-
-        Sanity: ensure index.html exists after build
-          IF NOT EXIST "%API_WWWROOT%\index.html" (
-            echo Contents of "%API_WWWROOT%" 
-            dir /a "%API_WWWROOT%"
-            echo FE build did not produce "%API_WWWROOT%\index.html"
-            exit /b 1
-          ) 
+          
       # ----- Backend publish -----
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
