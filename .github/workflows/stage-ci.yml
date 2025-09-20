@@ -102,10 +102,10 @@ jobs:
           # Pull the environment-scoped secret into the step's environment
           DB_CONN: ${{ secrets.STAGE_DB_CONNECTION_STRING }}
         run: |
-          docker run -d --name tacomatrivia-stage `
-            -p 5141:5141 `
-            --restart unless-stopped `
-            -e "ConnectionStrings__Default=$env:DB_CONN" `
+          docker run -d --name tacomatrivia-stage ^
+            -p 5141:5141 ^
+            --restart unless-stopped ^
+            -e "ConnectionStrings__Default=$env:DB_CONN" ^
             tacomatrivia:stage
 
       # (Optional) Show container status and where the app is listening
