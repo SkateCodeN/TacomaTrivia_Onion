@@ -61,10 +61,10 @@ jobs:
       - name: Build frontend into API wwwroot
         shell: powershell -ExecutionPolicy Bypass 
         run: |
-          cd .\frontend
+          cd ./frontend
           npm ci
           # IMPORTANT: Writes output to ../TacomaTrivia.Api/wwwroot
-          npm run build -- --outDir ..\TacomaTrivia.Api\wwwroot
+          npm run build -- --outDir ../TacomaTrivia.Api\wwwroot
 
       # ----- Backend publish -----
       - name: Setup .NET SDK
@@ -76,15 +76,15 @@ jobs:
       - name: Publish API
         shell: pwsh
         run: |
-          dotnet restore .\TacomaTrivia.Api\TacomaTrivia.Api.csproj
-          dotnet publish .\TacomaTrivia.Api\TacomaTrivia.Api.csproj -c Release -o .\publish\Api
+          dotnet restore ./TacomaTrivia.Api/TacomaTrivia.Api.csproj
+          dotnet publish ./TacomaTrivia.Api/TacomaTrivia.Api.csproj -c Release -o .\publish\Api
 
       # ----- Docker build -----
       # Build a small runtime image using the already published output
       - name: Docker build image
         shell: pwsh
         run: |
-          docker build -t tacomatrivia:stage -f .\Dockerfile.runtime .
+          docker build -t tacomatrivia:stage -f ./Dockerfile.runtime .
 
       # ----- Replace running container -----
       - name: Stop old container (ignore if missing)
