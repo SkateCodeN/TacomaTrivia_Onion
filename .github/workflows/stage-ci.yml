@@ -70,8 +70,8 @@ jobs:
         working-directory: ./tacomatrivia-frontend 
         run: |
           IF NOT EXIST ..\TacomaTrivia.Api\wwwroot\ (
-            echo Creating ..\TacomaTrivia.Api\wwwroot
-            mkdir ..\TacomaTrivia.Api\wwwroot
+            echo Creating ../TacomaTrivia.Api\wwwroot
+            mkdir ../TacomaTrivia.Api\wwwroot
           )
           npm ci
           npm run build -- --outDir ../TacomaTrivia.Api/wwwroot
