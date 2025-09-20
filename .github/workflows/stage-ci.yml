@@ -69,16 +69,16 @@ jobs:
       - name: Build frontend into API wwwroot
         working-directory: ./tacomatrivia-frontend 
         run: |
-          IF NOT EXIST ..\TacomaTrivia.Api\wwwroot\ (
-            echo Creating ../TacomaTrivia.Api\wwwroot
-            mkdir ../TacomaTrivia.Api\wwwroot
+          IF NOT EXIST ../TacomaTrivia.Api/wwwroot\ (
+            echo Creating ../TacomaTrivia.Api/wwwroot
+            mkdir ../TacomaTrivia.Api/wwwroot
           )
           npm ci
           npm run build -- --outDir ../TacomaTrivia.Api/wwwroot
-          IF NOT EXIST ..\TacomaTrivia.Api\wwwroot\index.html (
-            echo Contents of ..\TacomaTrivia.Api\wwwroot:
-            dir /a ..\TacomaTrivia.Api\wwwroot
-            echo FE build did not produce ..\TacomaTrivia.Api\wwwroot\index.html
+          IF NOT EXIST ../TacomaTrivia.Api/wwwroot/index.html (
+            echo Contents of ../TacomaTrivia.Api/wwwroot:
+            dir /a ../TacomaTrivia.Api/wwwroot
+            echo FE build did not produce ../TacomaTrivia.Api/wwwroot/index.html
             exit /b 1
           )
 
