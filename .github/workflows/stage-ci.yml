@@ -55,6 +55,7 @@ jobs:
         with:
           fetch-depth: 0
           clean: true
+          path: src
      
       # ----- Frontend build -----
       # Installs Node on the Windows box for building the SPA
