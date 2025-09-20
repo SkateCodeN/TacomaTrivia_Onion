@@ -34,7 +34,8 @@ jobs:
    # --- 3) Build FE -> wwwroot, publish API, build+run Docker on self-hosted Windows ---
   deploy:
     # Match your Windows self-hosted runner labels exactly
-    runs-on: [self-hosted, Windows, X64, Stage]
+    
+    runs-on: [self-hosted, Windows, X64, Stage, Win-Runner-Stage]
     needs: [unit, integration]
 
     # Grants access to ENV-scoped secrets (set up in Settings → Environments)
