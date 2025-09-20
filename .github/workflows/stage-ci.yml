@@ -35,7 +35,7 @@ jobs:
   deploy:
     # Match your Windows self-hosted runner labels exactly
     
-    runs-on: [self-hosted, Windows, X64, Stage, Win-Runner-Stage]
+    runs-on: [self-hosted, Windows, X64]
     needs: [unit, integration]
 
     # Grants access to ENV-scoped secrets (set up in Settings → Environments)
