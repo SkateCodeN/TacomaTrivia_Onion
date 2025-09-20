@@ -105,7 +105,8 @@ jobs:
             exit /b 1
           )
           
-
+      #TODO if docker desktop off , turn it on,
+      #Todo if docker is already running container of same name, delete it
       # ----- Docker build -----
       # Build a small runtime image using the already published output
       - name: Docker build image
