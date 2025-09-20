@@ -53,7 +53,11 @@ jobs:
         with:
           fetch-depth: 0
           clean: true
-
+     # Debug: confirm where we are
+      - name: Show workspace (debug)
+        run: |
+          Write-Host "GITHUB_WORKSPACE=$env:GITHUB_WORKSPACE"
+          Get-ChildItem -Force
       # ----- Frontend build -----
       # Installs Node on the Windows box for building the SPA
       - name: Setup Node.js
