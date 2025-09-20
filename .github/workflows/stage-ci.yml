@@ -75,7 +75,7 @@ jobs:
             mkdir "%API_WWWROOT%"
           )
           npm ci
-          npm run build -- --outDir ../TacomaTrivia_Onion/TacomaTrivia.Api/wwwroot
+          npm run build -- --outDir "%API_WWWROOT%"
           IF NOT EXIST ../TacomaTrivia.Api/wwwroot/index.html (
             echo Contents of ../TacomaTrivia.Api/wwwroot:
             dir /a ../TacomaTrivia.Api/wwwroot
