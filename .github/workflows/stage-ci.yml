@@ -30,4 +30,6 @@ jobs:
       - name: Integration tests
         run: dotnet test ./TacomaTrivia.IntegrationTests/TacomaTrivia.IntegrationTests.csproj -c Release -v minimal
   
+  #on my pc that has the service, the local account is now running the service
+  
     
