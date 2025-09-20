@@ -66,7 +66,7 @@ jobs:
       - name: Build frontend into API wwwroot
         working-directory: ./tacomatrivia-frontend 
         run: |
-          cd ./tacomatrivia-frontend
+          
           npm ci
           # IMPORTANT: Writes output to ../TacomaTrivia.Api/wwwroot
           npm run build -- --outDir ../TacomaTrivia.Api\wwwroot
