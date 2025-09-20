@@ -59,7 +59,7 @@ jobs:
       # Build your Vite frontend and output directly into the API's wwwroot
       # NOTE: Change 'frontend' to your actual frontend directory name
       - name: Build frontend into API wwwroot
-        shell: pwsh
+        shell: poweshell
         run: |
           cd .\frontend
           npm ci
