@@ -80,7 +80,7 @@ jobs:
           npm ci
           npm run build -- --outDir "%API_WWWROOT%"
 
-        rem Sanity: ensure index.html exists after build
+        Sanity: ensure index.html exists after build
           IF NOT EXIST "%API_WWWROOT%\index.html" (
             echo Contents of "%API_WWWROOT%" 
             dir /a "%API_WWWROOT%"
