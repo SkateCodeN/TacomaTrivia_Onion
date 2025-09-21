@@ -147,3 +147,7 @@ jobs:
 
 #Nope turns out the issue might have been a rogue terminal pointing to
 #that folder and causing the hangup
+
+#Then fixed the issue with wwwroot not existing and vite not building
+
+#Current issue is the connection string to the DB
