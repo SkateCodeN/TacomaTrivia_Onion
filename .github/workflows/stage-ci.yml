@@ -124,7 +124,7 @@ jobs:
       - name: Run container (inject secrets)
         env:
           # Pull the environment-scoped secret into the step's environment
-          DB_CONN: ${{ secrets.STAGE_DB_CONNECTION_STRING }}
+          DB_CONN: ${{ secrets.POSTGRES_DB_CONNECTIONSTR }}
         run: |
           docker run -d --name tacomatrivia-stage ^
             -p 5141:5141 ^
