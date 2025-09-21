@@ -129,7 +129,7 @@ jobs:
           docker run -d --name tacomatrivia-stage ^
             -p 5141:5141 ^
             --restart unless-stopped ^
-            -e "Postgres=$env:%DB_CONN%" ^
+            -e "Postgres=%DB_CONN%" ^
             tacomatrivia:stage
 
       # (Optional) Show container status and where the app is listening
