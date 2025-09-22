@@ -38,6 +38,9 @@ export default function VenuesTable() {
   return (
     <div>
       <Group justify="space-between" mb="sm" wrap="wrap">
+        <button>
+          Add New
+        </button>
         <Group>
           <TextInput
             leftSection={<IconSearch size={16} />}
