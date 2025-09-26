@@ -7,5 +7,9 @@ public sealed record VenueDto(
     bool AllowsPets,
     int Rounds,
     string? Phone,
-    string? Address
+    string? Address,
+    int TriviaDay, 
+    DateTime TriviaStart, 
+    string? Website, 
+    bool AllowsKids 
 );
