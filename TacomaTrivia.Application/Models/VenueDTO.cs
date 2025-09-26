@@ -8,8 +8,8 @@ public sealed record VenueDto(
     int Rounds,
     string? Phone,
     string? Address,
-    int TriviaDay, 
-    DateTime TriviaStart, 
+    int? TriviaDay, 
+    TimeOnly? TriviaStart, 
     string? Website, 
     bool AllowsKids 
 );

@@ -14,8 +14,8 @@ public sealed class CreatedVenueRequest
     public int Rounds { get; init; }
     
     [Range(0, 20)]
-    public int TriviaDay { get; init; }
-    public  DateTime TriviaStart { get; init; }
+    public int? TriviaDay { get; init; }
+    public  TimeOnly? TriviaStart { get; init; }
     public  string? Website { get; init; }
     public bool AllowsKids { get; init; }
 }

@@ -12,8 +12,8 @@ public sealed class TacomaVenue
     public bool AllowsPets { get; private set; }
     public int Rounds { get; private set; }
 
-    public int TriviaDay { get; private set; }
-    public DateTime TriviaStart { get; private set; }
+    public int? TriviaDay { get; private set; }
+    public TimeOnly? TriviaStart { get; private set; }
 
     public string? Website { get; private set; }
 
@@ -27,8 +27,8 @@ public sealed class TacomaVenue
         string? address,
         bool allowsPets,
         int rounds,
-        int triviaDay,
-        DateTime triviaStart,
+        int? triviaDay,
+        TimeOnly? triviaStart,
         string? website,
         bool allowsKids
     )
@@ -57,8 +57,8 @@ public sealed class TacomaVenue
         string? address,
         bool allowsPets,
         int rounds,
-        int triviaDay,
-        DateTime triviaStart,
+        int? triviaDay,
+        TimeOnly? triviaStart,
         string? website,
         bool allowsKids
     )

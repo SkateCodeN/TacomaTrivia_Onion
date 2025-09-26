@@ -53,8 +53,8 @@ public sealed class VenueService(IVenueRepository repo) : IVenueService
         string? address,
         int rounds,
         bool allowsPets,
-        int triviaDay,
-        DateTime triviaStart,
+        int? triviaDay,
+        TimeOnly? triviaStart,
         string? website,
         bool allowsKids,
         CancellationToken ct
@@ -80,8 +80,8 @@ public sealed class VenueService(IVenueRepository repo) : IVenueService
         string? address,
         bool allowsPets,
         int rounds,
-        int triviaDay,
-        DateTime triviaStart,
+        int? triviaDay,
+        TimeOnly? triviaStart,
         string? website,
         bool allowsKids,
         CancellationToken ct
