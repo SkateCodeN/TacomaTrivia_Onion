@@ -4,6 +4,7 @@ import { IconSearch, IconRefresh } from '@tabler/icons-react';
 import RowsPerPageSelect from '@shared/ui/RowsPerPageSelect.jsx';
 import useDebounce from '@shared/hooks/useDebounce.js';
 import { venuesApi } from '../api/venuesApi.js';
+import DayConverter from '../helper functions/DayConverter.js';
 
 export default function VenuesTable() {
   const [rows, setRows] = useState([]);
@@ -67,6 +68,7 @@ export default function VenuesTable() {
             <Table.Tr>
               <Table.Th>Name</Table.Th>
               <Table.Th>Address</Table.Th>
+              <Table.Th>Day</Table.Th>
               <Table.Th>Open</Table.Th>
             </Table.Tr>
           </Table.Thead>
@@ -85,6 +87,7 @@ export default function VenuesTable() {
               <Table.Tr key={v.id}>
                 <Table.Td>{v.name}</Table.Td>
                 <Table.Td>{v.address}</Table.Td>
+                <Table.Td>{DayConverter(v.triviaDay)}</Table.Td>
                 <Table.Td>
                   <Badge color={v.allowsPets || v.isOpen ? 'green' : 'gray'}>
                     {(v.isOpen ?? v.allowsPets) ? 'Open' : 'Closed'}
