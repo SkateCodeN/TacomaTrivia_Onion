@@ -69,7 +69,7 @@ export default function VenuesTable() {
               <Table.Th>Name</Table.Th>
               <Table.Th>Address</Table.Th>
               <Table.Th>Day</Table.Th>
-              <Table.Th>Open</Table.Th>
+              <Table.Th>Pets</Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
@@ -89,8 +89,8 @@ export default function VenuesTable() {
                 <Table.Td>{v.address}</Table.Td>
                 <Table.Td>{DayConverter(v.triviaDay)}</Table.Td>
                 <Table.Td>
-                  <Badge color={v.allowsPets || v.isOpen ? 'green' : 'gray'}>
-                    {(v.isOpen ?? v.allowsPets) ? 'Open' : 'Closed'}
+                  <Badge color={v.allowsPets ? 'green' : 'gray'}>
+                    {(v.allowsPets) ? 'Allowed' : 'No'}
                   </Badge>
                 </Table.Td>
               </Table.Tr>
