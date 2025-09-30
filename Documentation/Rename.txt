@@ -1,0 +1,12 @@
+If you are first installing this on a machine that does 
+not have the Docker DB Installed, make sure you remember to 
+grab the .env files off the server they are kept and then
+run the commands to get it running.
+
+This application depends on a Postgres DB and it itself is built into 
+a docker container.
+
+I built this application to expose myself to the Clean Architecture design pattern.
+With it we also include containerization and a CI/CD pipeline as well as 
+working as much as I can to maintain the documentaion. 
+
