@@ -5,10 +5,17 @@ import RowsPerPageSelect from '@shared/ui/RowsPerPageSelect.jsx';
 import useDebounce from '@shared/hooks/useDebounce.js';
 import { venuesApi } from '../api/venuesApi.js';
 import DayConverter from '../helper functions/DayConverter.js';
+import CreateVenueDialog from './CreateVenueDialog.jsx';
+import OpenDeleteRequest from './OpenDeleteRequest.jsx';
 
 export default function VenuesTable() {
   const [rows, setRows] = useState([]);
   const [total, setTotal] = useState(undefined);
+
+  // To handle the opening of the modal
+  const[open, setOpen] = useState(false);
+  // Handle the open and clode of the delete dialog
+  const [openDelete, setOpenDelete] = useState(false);
 
   const [q, setQ] = useState('');
   const dq = useDebounce(q, 350);
@@ -39,9 +46,9 @@ export default function VenuesTable() {
   return (
     <div>
       <Group justify="space-between" mb="sm" wrap="wrap">
-        <button>
+        <Button onClick={() => setOpen(true)}>
           Add New
-        </button>
+        </Button>
         <Group>
           <TextInput
             leftSection={<IconSearch size={16} />}
@@ -70,6 +77,7 @@ export default function VenuesTable() {
               <Table.Th>Address</Table.Th>
               <Table.Th>Day</Table.Th>
               <Table.Th>Pets</Table.Th>
+              <Table.Th>Action</Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
@@ -90,8 +98,20 @@ export default function VenuesTable() {
                 <Table.Td>{DayConverter(v.triviaDay)}</Table.Td>
                 <Table.Td>
                   <Badge color={v.allowsPets ? 'green' : 'gray'}>
-                    {(v.allowsPets) ? 'Allowed' : 'No'}
+                    {(v.allowsPets) ? 'Yes' : 'No'}
                   </Badge>
+                </Table.Td>
+                <Table.Td>
+                  <div style={{display:"flex", justifyContent:"space-around"}}>
+                    <Button color='yellow'>Edit</Button>
+                    <Button 
+                      color='red'
+                      onClick={() => setOpenDelete(true)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                  
                 </Table.Td>
               </Table.Tr>
             ))}
@@ -115,6 +135,16 @@ export default function VenuesTable() {
           </Button>
         </Group>
       </Group>
+
+      <CreateVenueDialog 
+        opened={open}
+        onClose={() => setOpen(false)}
+      />
+
+      <OpenDeleteRequest
+        opened={openDelete}
+        onClose={() => setOpenDelete(false)}
+      />
     </div>
   );
 }
