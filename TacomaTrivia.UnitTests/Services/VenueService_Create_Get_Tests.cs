@@ -1,6 +1,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 using TacomaTrivia.Application.Services;
+using TacomaTrivia.Application.Models;
 
 [TestFixture]
 public class VenueService_Create_Get_Tests
@@ -18,12 +19,21 @@ public class VenueService_Create_Get_Tests
     [Test]
     public async Task CreateAsync_ShouldReturn_Id_AndPersistedVenue()
     {
+        var data = new CreatedVenueRequest
+        {
+            Name = "Alma Mater",
+            Phone = "253-555-1234",
+            Address = "1322 Fawcett Ave",
+            AllowsPets = true,
+            Rounds = 5,
+            TriviaDay = 5,
+            TriviaStart = new TimeOnly(10, 30),
+            Website = "www.alma.com",
+            AllowsKids = true
+
+        };
         var id = await _svc.CreateAsync(
-            name: "Alma Mater",
-            phone: "253-555-1234",
-            address: "1322 Fawcett Ave",
-            rounds: 5,
-            allowsPets: true,
+            data,
             ct: default
         );
 

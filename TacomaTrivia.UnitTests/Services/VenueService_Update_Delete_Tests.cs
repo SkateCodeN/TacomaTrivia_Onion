@@ -19,24 +19,48 @@ public class VenueService_Update_Delete_Tests
     [Test]
     public async Task Update_Should_Mutate_Existing_Venue()
     {
-        var id = await _svc.CreateAsync("Old", "1", "A", 2, false, default);
-
-        var patch = new UpdatedVenue
+        var data = new CreatedVenueRequest
+        {
+            Name = "Old",
+            Phone = "1",
+            Address = "A",
+            AllowsPets = true,
+            Rounds = 2,
+            TriviaDay = 3,
+            Website = "dofoo.com",
+            AllowsKids = true
+        };
+        var id = await _svc.CreateAsync(
+            data,
+            default
+        );
+       
+        var patch2 = new UpdatedVenue
         {
             Name = "New",
             Phone = "2",
             Address = "B",
             AllowsPets = true,
-            Rounds = 6
+            Rounds = 6,
+            TriviaDay = 4,
+            TriviaStart = new TimeOnly(4, 30),
+            Website = "new.com",
+            AllowsKids = true
+            
+
         };
+        // var patch = new UpdatedVenue
+        // {
+        //     Name = "New",
+        //     Phone = "2",
+        //     Address = "B",
+        //     AllowsPets = true,
+        //     Rounds = 6
+        // };
 
         await _svc.UpdateAsync(
             id,
-            patch.Name,
-            patch.Phone,
-            patch.Address,
-            patch.AllowsPets,
-            patch.Rounds,
+            patch2,
             default
         );
 
@@ -51,7 +75,18 @@ public class VenueService_Update_Delete_Tests
     [Test]
     public async Task Delete_Should_Remove_And_GetById_Returns_Null()
     {
-        var id = await _svc.CreateAsync("X", "p", "a", 1, false, default);
+        var data = new CreatedVenueRequest
+        {
+            Name = "X",
+            Phone = "P",
+            Address = "A",
+            AllowsPets = false,
+            Rounds = 1,
+            TriviaDay = 3,
+            Website = "dofoo.com",
+            AllowsKids = true
+        };
+        var id = await _svc.CreateAsync(data, default);
 
         await _svc.DeleteAsync(id, default); // void + throw-on-not-found policy
 
