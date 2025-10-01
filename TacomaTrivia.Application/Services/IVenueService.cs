@@ -7,28 +7,12 @@ public interface IVenueService
     Task<IReadOnlyList<VenueDto>> SearchAsync(string? q, int page, int pageSize, CancellationToken ct);
     Task<VenueDto?> GetByIdAsync(Guid id, CancellationToken ct);
     Task<Guid> CreateAsync(
-        string name,
-        string? phone,
-        string? address,
-        int rounds,
-        bool allowsPets,
-        int? triviaDay,
-        TimeOnly? triviaStart,
-        string? website,
-        bool allowsKids,
+        CreatedVenueRequest createdVenue,
         CancellationToken ct
     );
     Task UpdateAsync(
         Guid id,
-        string name,
-        string? phone,
-        string? address,
-        bool allowsPets,
-        int rounds,
-        int? triviaDay,
-        TimeOnly? triviaStart,
-        string? website,
-        bool allowsKids,
+        UpdatedVenue updatedVenue,
         CancellationToken ct
     );
     Task DeleteAsync(Guid id, CancellationToken ct);

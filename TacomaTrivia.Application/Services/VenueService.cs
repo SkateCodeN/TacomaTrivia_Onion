@@ -48,57 +48,41 @@ public sealed class VenueService(IVenueRepository repo) : IVenueService
     }
 
     public Task<Guid> CreateAsync(
-        string name,
-        string? phone,
-        string? address,
-        int rounds,
-        bool allowsPets,
-        int? triviaDay,
-        TimeOnly? triviaStart,
-        string? website,
-        bool allowsKids,
+        CreatedVenueRequest createdVenue,
         CancellationToken ct
     )
         => _repo.AddAsync(
             TacomaVenue.Create(
-                name,
-                phone,
-                address,
-                allowsPets,
-                rounds,
-                triviaDay,
-                triviaStart,
-                website,
-                allowsKids
+                createdVenue.Name,
+                createdVenue.Phone,
+                createdVenue.Address,
+                createdVenue.AllowsPets,
+                createdVenue.Rounds,
+                createdVenue.TriviaDay,
+                createdVenue.TriviaStart,
+                createdVenue.Website,
+                createdVenue.AllowsKids
             ),
         ct);
 
     public async Task UpdateAsync(
         Guid id,
-        string name,
-        string? phone,
-        string? address,
-        bool allowsPets,
-        int rounds,
-        int? triviaDay,
-        TimeOnly? triviaStart,
-        string? website,
-        bool allowsKids,
+        UpdatedVenue updatedVenue,
         CancellationToken ct
     )
     {
         if (id == Guid.Empty) throw new ArgumentException("Id cannot be empty");
         var venue = await _repo.GetByIdAsync(id, ct) ?? throw new KeyNotFoundException($"Venue {id} not found");
         venue.Update(
-            name,
-            phone,
-            address,
-            allowsPets,
-            rounds,
-            triviaDay,
-            triviaStart,
-            website,
-            allowsKids
+            updatedVenue.Name,
+            updatedVenue.Phone,
+            updatedVenue.Address,
+            updatedVenue.AllowsPets,
+            updatedVenue.Rounds,
+            updatedVenue.TriviaDay,
+            updatedVenue.TriviaStart,
+            updatedVenue.Website,
+            updatedVenue.AllowsKids
         );
         await _repo.UpdateAsync(venue, ct);
     }
