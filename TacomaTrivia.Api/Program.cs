@@ -8,8 +8,7 @@ using TacomaTrivia.Infrastructure.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 
 // Connection string: env var ConnectionStrings__Postgres takes precedence
-var conn = builder.Configuration.GetConnectionString("Postgres")
-    ?? "Host=localhost;Port=9000;Database=tacomatrivia;Username=tacomatrivia;Password=Sunrise@123";
+var conn = builder.Configuration.GetConnectionString("Postgres");
 
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(conn));
 
