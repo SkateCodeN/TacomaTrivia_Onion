@@ -35,7 +35,7 @@ public sealed class TacomaVenue
     {
         if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name required");
         if (rounds < 0) throw new ArgumentOutOfRangeException(nameof(rounds));
-        if (triviaDay < 0 && triviaDay > 7) throw new ArgumentOutOfRangeException(nameof(triviaDay));
+        if (triviaDay < 0 || triviaDay > 7) throw new ArgumentOutOfRangeException(nameof(triviaDay));
         return new TacomaVenue
         {
             Name = name.Trim(),
@@ -65,7 +65,7 @@ public sealed class TacomaVenue
     {
         if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name required");
         if (rounds < 0) throw new ArgumentOutOfRangeException(nameof(rounds));
-        if (triviaDay < 0 && triviaDay > 7) throw new ArgumentOutOfRangeException(nameof(triviaDay));
+        if (triviaDay < 0 || triviaDay > 7) throw new ArgumentOutOfRangeException(nameof(triviaDay));
         Name = name.Trim();
         Phone = phone;
         Address = address;
