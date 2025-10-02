@@ -49,15 +49,7 @@ public class VenueService_Update_Delete_Tests
             
 
         };
-        // var patch = new UpdatedVenue
-        // {
-        //     Name = "New",
-        //     Phone = "2",
-        //     Address = "B",
-        //     AllowsPets = true,
-        //     Rounds = 6
-        // };
-
+     
         await _svc.UpdateAsync(
             id,
             patch2,
