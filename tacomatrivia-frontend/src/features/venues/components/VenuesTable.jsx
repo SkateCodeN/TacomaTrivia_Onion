@@ -7,6 +7,7 @@ import { venuesApi } from '../api/venuesApi.js';
 import DayConverter from '../helper functions/DayConverter.js';
 import CreateVenueDialog from './CreateVenueDialog.jsx';
 import OpenDeleteRequest from './OpenDeleteRequest.jsx';
+import VenueDialog from './VenueDialog.jsx'
 
 export default function VenuesTable() {
   const [rows, setRows] = useState([]);
@@ -16,6 +17,9 @@ export default function VenuesTable() {
   const[open, setOpen] = useState(false);
   // Handle the open and clode of the delete dialog
   const [openDelete, setOpenDelete] = useState(false);
+
+  const [openEdit, setOpenEdit] = useState(false);
+  const [rowData,setRowData] = useState([]);
 
   const [q, setQ] = useState('');
   const dq = useDebounce(q, 350);
@@ -103,7 +107,15 @@ export default function VenuesTable() {
                 </Table.Td>
                 <Table.Td>
                   <div style={{display:"flex", justifyContent:"space-around"}}>
-                    <Button color='yellow'>Edit</Button>
+                    <Button 
+                      color='yellow'
+                      onClick={() => {
+                        setRowData(v);
+                        setOpenEdit(true)
+                      }}
+                    >
+                      Edit
+                    </Button>
                     <Button 
                       color='red'
                       onClick={() => setOpenDelete(true)}
@@ -144,6 +156,12 @@ export default function VenuesTable() {
       <OpenDeleteRequest
         opened={openDelete}
         onClose={() => setOpenDelete(false)}
+      />
+
+      <VenueDialog 
+        opened={openEdit}
+        onClose={() => setOpenEdit(false)}
+        rowData = {rowData}
       />
     </div>
   );
