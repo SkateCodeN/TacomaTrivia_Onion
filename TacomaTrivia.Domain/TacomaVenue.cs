@@ -50,8 +50,7 @@ public sealed class TacomaVenue
         };
     }
 
-    public void Update
-    (
+    public void Update(
         string name,
         string? phone,
         string? address,
