@@ -4,19 +4,28 @@ using TacomaTrivia.Application.Services;
 using TacomaTrivia.Application.Contracts;
 using TacomaTrivia.Infrastructure;
 using TacomaTrivia.Infrastructure.Repositories;
+using TacomaTrivia.Application.Services.User;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Connection string: env var ConnectionStrings__Postgres takes precedence
-var conn = builder.Configuration.GetConnectionString("Postgres")
-    ?? "Host=localhost;Port=9000;Database=tacomatrivia;Username=tacomatrivia;Password=Sunrise@123";
+var conn = builder.Configuration.GetConnectionString("New-Postgres");
 
+// FOr postgres
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(conn));
 
+//For MS Sql
+builder.Services.AddDbContext<UserDbContext>(opt => opt.UseSqlServer(
+    builder.Configuration.GetConnectionString("UserMockMsSql"),
+    sql => sql.EnableRetryOnFailure() // good for transient faults
+));
+
+// DI for the repo and service for Venues (Postgres)
 builder.Services.AddScoped<IVenueRepository, EfVenueRepository>();
 builder.Services.AddScoped<IVenueService, VenueService>();
 
-
+builder.Services.AddScoped<IUserRepository, EFUserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -38,34 +47,34 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+//var summaries = new[]
+// {
+//     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+// };
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+// app.MapGet("/weatherforecast", () =>
+// {
+//     var forecast = Enumerable.Range(1, 5).Select(index =>
+//         new WeatherForecast
+//         (
+//             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+//             Random.Shared.Next(-20, 55),
+//             summaries[Random.Shared.Next(summaries.Length)]
+//         ))
+//         .ToArray();
+//     return forecast;
+// })
+// .WithName("GetWeatherForecast")
+// .WithOpenApi();
 
 app.MapControllers();
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+// record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+// {
+//     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+// }
 
 //created for Api integration tests
 public partial class Program { }
