@@ -6,6 +6,7 @@ export default function Layout() {
       <nav style={{ display: 'flex', gap: 12, padding: '12px 0', borderBottom: '1px solid #eee' }}>
         <NavLink to="/" end>Home</NavLink>
         <NavLink to="/venues">Venues</NavLink>
+        <NavLink to="/users">Users</NavLink>
       </nav>
       <main>
         <Outlet />
