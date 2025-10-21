@@ -53,3 +53,4 @@ coverage/
 Ignoredappsettings.json
 Docker/Mock MsSQL/docker-compose.yml
 Docker/Mock MsSQL/init.sql
+Docker/Mock MsSQL/Set up docker ms sql.txt
