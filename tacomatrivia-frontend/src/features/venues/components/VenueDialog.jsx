@@ -145,7 +145,7 @@ export default function CreateVenueDialog({opened, onClose, rowData}){
                         <TextInput 
                             label="Phone"
                             placeholder='(123) 456-7890'
-                            value={rowData.phone ||prettyPhone}
+                            value={rowData.phone || prettyPhone}
                             onChange={(event) => setPhoneDigits(event.target.value)}
                             maxLength={14}
                         />
