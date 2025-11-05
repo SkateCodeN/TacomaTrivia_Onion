@@ -34,7 +34,7 @@ api.interceptors.response.use(
 
 export const http = {
   get: (url, params) => api.get(url, { params }).then((r) => r.data),
-  post: (url, body) => api.post(url, body).then((r) => r.data),
-  put:  (url, body) => api.put(url, body).then((r) => r.data),
-  del:  (url)       => api.delete(url).then((r) => r.data),
+  post: (url, body) => api.post(url, body).then((r) => ({ data: r.data, headers: r.headers, status: r.status })),
+  put:  (url, body) => api.put(url, body).then((r) => ({ data: r.data, headers: r.headers, status: r.status })),
+  del:  (url)       => api.delete(url).then((r) => ({ status: r.status })),
 };
