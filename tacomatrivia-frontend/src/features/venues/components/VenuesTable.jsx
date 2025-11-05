@@ -4,10 +4,11 @@ import { IconSearch, IconRefresh } from '@tabler/icons-react';
 import RowsPerPageSelect from '@shared/ui/RowsPerPageSelect.jsx';
 import useDebounce from '@shared/hooks/useDebounce.js';
 import { venuesApi } from '../api/venuesApi.js';
-import DayConverter from '../helper functions/DayConverter.js';
+import {DayConverter} from '../helper functions/DayConverter.js';
 import CreateVenueDialog from './CreateVenueDialog.jsx';
 import OpenDeleteRequest from './OpenDeleteRequest.jsx';
 import VenueDialog from './VenueDialog.jsx'
+
 
 export default function VenuesTable() {
   const [rows, setRows] = useState([]);
@@ -46,7 +47,10 @@ export default function VenuesTable() {
   };
 
   useEffect(() => { fetchData(); }, [dq, page, pageSize]);
-
+  
+  const rehydrate = () =>{
+    fetchData()
+  }
   return (
     <div>
       <Group justify="space-between" mb="sm" wrap="wrap">
@@ -162,6 +166,7 @@ export default function VenuesTable() {
         opened={openEdit}
         onClose={() => setOpenEdit(false)}
         rowData = {rowData}
+        onCreated = {rehydrate}
       />
     </div>
   );
