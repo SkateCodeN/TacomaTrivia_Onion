@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TacomaTrivia.Application.Models;
 using TacomaTrivia.Application.Services;
@@ -66,4 +67,10 @@ public sealed class VenuesController(IVenueService svc) : ControllerBase
         await _svc.DeleteAsync(id, ct);
         return NoContent();
     }
+
+
+    //Test Api route for Auth0
+    // [Authorize]
+    // [HttpGet("privateTest")]
+    // public IActionResult Private() => Ok($"You are authorized as {User.Identity?.Name ?? "unknown"}");
 }

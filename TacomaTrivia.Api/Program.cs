@@ -5,6 +5,10 @@ using TacomaTrivia.Application.Contracts;
 using TacomaTrivia.Infrastructure;
 using TacomaTrivia.Infrastructure.Repositories;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Connection string: env var ConnectionStrings__Postgres takes precedence
@@ -21,6 +25,59 @@ builder.Services.AddScoped<IVenueService, VenueService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 builder.Services.AddControllers();
+
+// Auth0 Authorization via Jwt
+var domain = builder.Configuration["Auth0:Domain"];
+var audience = builder.Configuration["Auth0:Audience"];
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.Authority = $"https://{domain}/";
+    options.Audience = audience;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidIssuer = $"https://{domain}/",
+        ValidateAudience = true,
+        ValidAudience = audience,
+        ValidateLifetime = true
+    };
+    
+
+
+    // options.TokenValidationParameters = new TokenValidationParameters
+    // {
+    //     ValidateIssuer = true,
+    //     ValidIssuer = $"https://{domain}/",
+    //     ValidateAudience = true,
+    //     ValidAudiences =
+    // [
+    //     audience, // your API identifier
+    //     "https://tacomatrivia.us.auth0.com/userinfo"
+    // ],
+    //     NameClaimType = "name",
+    //     RoleClaimType = "permissions"  // OR "roles" if using RBAC roles
+    // };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnAuthenticationFailed = context =>
+        {
+            Console.WriteLine("AUTH FAILED: " + context.Exception.Message);
+            return Task.CompletedTask;
+        }
+    };
+
+});
+
+// This statrst the authorization middleware
+builder.Services.AddAuthorization();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -37,34 +94,38 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+// Here we use authentitication and authorization
+app.UseAuthentication();
+app.UseAuthorization();
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+// var summaries = new[]
+// {
+//     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+// };
+
+// app.MapGet("/weatherforecast", () =>
+// {
+//     var forecast = Enumerable.Range(1, 5).Select(index =>
+//         new WeatherForecast
+//         (
+//             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+//             Random.Shared.Next(-20, 55),
+//             summaries[Random.Shared.Next(summaries.Length)]
+//         ))
+//         .ToArray();
+//     return forecast;
+// })
+// .WithName("GetWeatherForecast")
+// .WithOpenApi();
 
 app.MapControllers();
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+// record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+// {
+//     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+// }
 
 //created for Api integration tests
 public partial class Program { }
