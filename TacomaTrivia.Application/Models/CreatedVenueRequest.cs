@@ -9,7 +9,7 @@ public sealed class CreatedVenueRequest
     public string? Phone { get; init; }
     public string? Address { get; init; }
     public bool AllowsPets { get; init; }
-
+    
     [Range(0, 20)]
     public int Rounds { get; init; }
     
