@@ -34,7 +34,6 @@ public sealed class TTUser
         };
     }
 
-
     public void Update(
         string name,
         string? phone,
