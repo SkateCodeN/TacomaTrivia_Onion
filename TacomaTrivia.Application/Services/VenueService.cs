@@ -47,7 +47,7 @@ public sealed class VenueService(IVenueRepository repo) : IVenueService
             );
     }
 
-    public Task<Guid> CreateAsync(
+    public async Task<Guid> CreateAsync(
         string name,
         string? phone,
         string? address,
@@ -59,7 +59,7 @@ public sealed class VenueService(IVenueRepository repo) : IVenueService
         bool allowsKids,
         CancellationToken ct
     )
-        => _repo.AddAsync(
+        => await _repo.AddAsync(
             TacomaVenue.Create(
                 name,
                 phone,
