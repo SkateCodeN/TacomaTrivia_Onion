@@ -4,7 +4,7 @@ using TacomaTrivia.Application.Models;
 using TacomaTrivia.Domain;
 
 namespace TacomaTrivia.Infrastructure.Repositories;
-/// <summary>EF Core repository implementation (SQL Server oriented).</summary>
+/// <summary>EF Core repository implementation (MS SQL Server oriented).</summary>
 public sealed class EFUserRepository(UserDbContext db) : IUserRepository
 {
     private readonly UserDbContext _db = db;
