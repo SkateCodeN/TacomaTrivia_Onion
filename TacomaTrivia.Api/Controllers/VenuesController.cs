@@ -42,7 +42,6 @@ public sealed class VenuesController(IVenueService svc) : ControllerBase
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdatedVenue body, CancellationToken ct = default)
     {
-        
         await _svc.UpdateAsync(
             id,
             body.Name,
