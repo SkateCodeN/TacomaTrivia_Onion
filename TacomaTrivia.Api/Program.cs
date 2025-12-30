@@ -5,15 +5,22 @@ using TacomaTrivia.Application.Contracts;
 using TacomaTrivia.Infrastructure;
 using TacomaTrivia.Infrastructure.Repositories;
 using TacomaTrivia.Application.Services.User;
+using TacomaTrivia.Infrastructure.Context;
+using TacomaTrivia.Application.Contracts.Teams;
+using TacomaTrivia.Infrastructure.Repositories.Postgres;
+using TacomaTrivia.Application.Services.Team;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Connection string: env var ConnectionStrings__Postgres takes precedence
 var conn = builder.Configuration.GetConnectionString("New-Postgres");
-
-// FOr postgres
+// Get the connection string from the json file
+var teamRecordConn = builder.Configuration.GetConnectionString("");
+// FOr postgres this is the VenueDB Context
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(conn));
 
+// Postgres: TeamRecord DB context
+builder.Services.AddDbContext<TeamRecordDBContext>(option => option.UseNpgsql(teamRecordConn));
 //For MS Sql
 builder.Services.AddDbContext<UserDbContext>(opt => opt.UseSqlServer(
     builder.Configuration.GetConnectionString("UserMockMsSql"),
@@ -27,6 +34,9 @@ builder.Services.AddScoped<IVenueService, VenueService>();
 builder.Services.AddScoped<IUserRepository, EFUserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+// DI for TeamRecord
+builder.Services.AddScoped<ITeamRecordRepository, EFTeamRecordRepo>();
+builder.Services.AddScoped<ITeamRecordSvc,TeamRecordSvc>();
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
