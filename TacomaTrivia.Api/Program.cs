@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Connection string: env var ConnectionStrings__Postgres takes precedence
 var conn = builder.Configuration.GetConnectionString("New-Postgres");
 // Get the connection string from the json file
-var teamRecordConn = builder.Configuration.GetConnectionString("");
+var teamRecordConn = builder.Configuration.GetConnectionString("TeamRecordsDB");
 // FOr postgres this is the VenueDB Context
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(conn));
 
