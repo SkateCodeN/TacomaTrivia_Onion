@@ -36,7 +36,8 @@ export default function UsersTable() {
   const pages = useMemo(() => total ? Math.max(1, Math.ceil(total / pageSize)) : undefined, [total, pageSize]);
 
   const fetchData = async () => {
-    setLoading(true); setErr('');
+    setLoading(true); 
+    setErr('');
     try {
       const { items, total } = await usersApi.list({ q: dq, page, pageSize });
       setRows(items || []);
