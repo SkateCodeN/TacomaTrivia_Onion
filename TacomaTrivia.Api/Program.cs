@@ -6,9 +6,9 @@ using TacomaTrivia.Infrastructure;
 using TacomaTrivia.Infrastructure.Repositories;
 using TacomaTrivia.Application.Services.User;
 using TacomaTrivia.Infrastructure.Context;
-using TacomaTrivia.Application.Contracts.Teams;
+using TacomaTrivia.Application.Contracts.TeamRecords;
 using TacomaTrivia.Infrastructure.Repositories.Postgres;
-using TacomaTrivia.Application.Services.Team;
+using TacomaTrivia.Application.Services.TeamRecords;
 
 var builder = WebApplication.CreateBuilder(args);
 
