@@ -1,6 +1,6 @@
-using System.Data.Common;
+
 using Microsoft.EntityFrameworkCore;
-using TacomaTrivia.Application.Contracts.Teams;
+using TacomaTrivia.Application.Contracts.TeamRecords;
 using TacomaTrivia.Domain.AggregateRoots;
 using TacomaTrivia.Infrastructure.Context;
 namespace TacomaTrivia.Infrastructure.Repositories.Postgres;

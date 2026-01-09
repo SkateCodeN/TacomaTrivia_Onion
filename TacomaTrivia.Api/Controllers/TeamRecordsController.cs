@@ -1,7 +1,7 @@
 using System.Drawing;
 using Microsoft.AspNetCore.Mvc;
-using TacomaTrivia.Application.Models.Team;
-using TacomaTrivia.Application.Services.Team;
+using TacomaTrivia.Application.Models.TeamRecords;
+using TacomaTrivia.Application.Services.TeamRecords;
 
 namespace TacomaTrivia.Api.Controllers;
 

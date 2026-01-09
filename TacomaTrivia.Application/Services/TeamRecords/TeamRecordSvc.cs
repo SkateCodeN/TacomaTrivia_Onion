@@ -1,11 +1,10 @@
 using TacomaTrivia.Domain.AggregateRoots;
-using TacomaTrivia.Application.Contracts.Teams;
-using TacomaTrivia.Application.Models.Team;
-using System.Drawing;
-using System.Reflection.Metadata.Ecma335;
+using TacomaTrivia.Application.Contracts.TeamRecords;
+using TacomaTrivia.Application.Models.TeamRecords;
 
 
-namespace TacomaTrivia.Application.Services.Team;
+
+namespace TacomaTrivia.Application.Services.TeamRecords;
 
 public sealed class TeamRecordSvc(ITeamRecordRepository repo) : ITeamRecordSvc
 {
