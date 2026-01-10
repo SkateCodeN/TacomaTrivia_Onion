@@ -14,6 +14,7 @@ public sealed class EFTeamRecordRepo(TeamRecordDBContext db) : ITeamRecordReposi
     public Task<TeamRecord?> GetByIdAsync(Guid id, CancellationToken ct)
         => _db.TeamRecords.AsNoTracking().FirstOrDefaultAsync(record => record.Id == id, ct);
 
+    // we search for 
     public async Task<IReadOnlyList<TeamRecord>> SearchAsync(string? q, int page, int size, CancellationToken ct )
     {
         var query = _db.TeamRecords.AsNoTracking();
