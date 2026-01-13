@@ -62,7 +62,11 @@ public sealed class EFTeamRepo(TeamDbContext db) : ITeamRepository
     // adding ability to search for a specific team via its name
     public async Task<IReadOnlyList<TriviaTeam>> SearchTeamsAsync(string? q, int page, int size, CancellationToken ct)
     {
-        var query = _db.TriviaTeams.AsNoTracking();
+        // The include allows us to also link our members associated with the team.
+        var query = _db.TriviaTeams
+        .Include(t => t.Members) 
+        .AsNoTracking();
+
         if(!string.IsNullOrEmpty(q))
             query = query.Where( v => EF.Functions.ILike(v.Name, $"%{q}%"));
 
