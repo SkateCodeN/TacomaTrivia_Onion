@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using TacomaTrivia.Application.Contracts.Team;
 using TacomaTrivia.Application.Models.Team;
 using TacomaTrivia.Domain.AggregateRoots.Teams;
+using TacomaTrivia.Application.Abstractions;
 namespace TacomaTrivia.Application.Services.Teams;
 
 public sealed class TeamService: ITeamService
@@ -157,9 +158,4 @@ public sealed class TeamService: ITeamService
     }
 }
 
-public interface ICurrentUser
-{
-    bool IsAuthenticated{get;}
-    Guid UserId {get; }
-    bool IsInRole(string role);
-}
+
