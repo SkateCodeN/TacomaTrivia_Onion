@@ -26,7 +26,7 @@ public sealed class TeamController(ITeamService svc): ControllerBase
         return CreatedAtRoute("GetTeamById", new {id}, null);
     }
 
-    [HttpGet("{id: guid}", Name = "GetTeamById")]
+    [HttpGet("{id:guid}", Name = "GetTeamById")]
     public async Task<ActionResult<TeamDto>> GetById([FromRoute] Guid id, CancellationToken ct = default)
     {
         var dto = await _svc.GetByIdAsync(id, ct);
