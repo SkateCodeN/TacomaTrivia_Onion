@@ -9,6 +9,9 @@ using TacomaTrivia.Infrastructure.Context;
 using TacomaTrivia.Application.Contracts.TeamRecords;
 using TacomaTrivia.Infrastructure.Repositories.Postgres;
 using TacomaTrivia.Application.Services.TeamRecords;
+using TacomaTrivia.Application.Contracts.Team;
+using TacomaTrivia.Application.Services.Teams;
+using TacomaTrivia.Application.Abstractions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,11 +19,19 @@ var builder = WebApplication.CreateBuilder(args);
 var conn = builder.Configuration.GetConnectionString("New-Postgres");
 // Get the connection string from the json file
 var teamRecordConn = builder.Configuration.GetConnectionString("TeamRecordsDB");
+
+// Connection string for teams
+var teamConn = builder.Configuration.GetConnectionString("TestTeamDb");
+
 // FOr postgres this is the VenueDB Context
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(conn));
 
 // Postgres: TeamRecord DB context
 builder.Services.AddDbContext<TeamRecordDBContext>(option => option.UseNpgsql(teamRecordConn));
+
+// Postgre: Teams DB
+builder.Services.AddDbContext<TeamDbContext>(option => option.UseNpgsql(teamConn));
+
 //For MS Sql
 builder.Services.AddDbContext<UserDbContext>(opt => opt.UseSqlServer(
     builder.Configuration.GetConnectionString("UserMockMsSql"),
@@ -34,13 +45,33 @@ builder.Services.AddScoped<IVenueService, VenueService>();
 builder.Services.AddScoped<IUserRepository, EFUserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+// Team DI
+builder.Services.AddScoped<ITeamRepository, EFTeamRepo>();
+builder.Services.AddScoped<ITeamService, TeamService>();
+
+//register the HttpContextAccesor
+builder.Services.AddHttpContextAccessor();
+//Current user DI
+builder.Services.AddScoped<ICurrentUser, CurrentUser>();
+
 // DI for TeamRecord
 builder.Services.AddScoped<ITeamRecordRepository, EFTeamRecordRepo>();
 builder.Services.AddScoped<ITeamRecordSvc,TeamRecordSvc>();
-// Add services to the container.
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+// THis snippet converts enum values such that when 
+// Dtos for team use "owner" instead of 1 for team role
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(
+            new System.Text.Json.Serialization.JsonStringEnumConverter()
+        );
+    }
+    )
+;
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
