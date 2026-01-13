@@ -21,11 +21,15 @@ public sealed class TeamDbContext(DbContextOptions<TeamDbContext> options): DbCo
             team.Property(x => x.Id).HasColumnName("id");
             team.Property(x => x.Name).HasColumnName("name").IsRequired();
             team.Property(x => x.DateCreated).HasColumnName("datecreated");
-            team.Property(x => x.DateCreated).HasColumnName("teamownerid");
+            team.Property(x => x.TeamOwnerId).HasColumnName("teamownerid");
 
+            // We user Navigation() to configure the relationship with a backing field
+            team.Navigation(t => t.Members)
+                .UsePropertyAccessMode(PropertyAccessMode.Field)
+                .HasField("_members");
             // We are telling Ef core that the Teams table is to be linked to the
             // TriviaTeam class, and that this team has many team members in the _member property
-            team.HasMany<TeamMember>("_members")
+            team.HasMany<TeamMember>(t => t.Members)
                 .WithOne()
                 .HasForeignKey(member => member.TeamId)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -36,9 +40,9 @@ public sealed class TeamDbContext(DbContextOptions<TeamDbContext> options): DbCo
         {
             member.ToTable("team_members");
             member.HasKey(m => new {m.TeamId, m.UserId});
-
-            member.Property(m => m.Role)
-            .IsRequired();
+            member.Property(m => m.UserId).HasColumnName("userid");
+            member.Property(m => m.TeamId).HasColumnName("teamid");
+            member.Property(m => m.Role).HasColumnName("role").IsRequired();
         });
     }
 }
