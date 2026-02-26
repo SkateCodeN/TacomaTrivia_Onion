@@ -51,3 +51,8 @@ coverage/
 
 
 Ignoredappsettings.json
+Docker/Mock MsSQL/Set up docker ms sql.txt
+Docker/Mock MsSQL/docker-compose.yml
+Docker/Mock MsSQL/init.sql
+tacomatrivia-frontend/src/features/Teams/components/UserSelectWithCreate copy 2.jsx
+tacomatrivia-frontend/src/features/Teams/components/UserSelectWithCreate copy.jsx

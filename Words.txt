@@ -1,0 +1,14 @@
+Index
+
+Why create this website?
+This website came from a desire to aggregate all the locations for trivia in Tacoma. 
+I am also a web developer, this was a no brainer to test my skills and develop an 
+application with architecture in mind and a use case I have tangibility. 
+
+So as you use this application, please let me know your ideas as to how I can make it better!
+
+
+The need for mods
+I made this with a love and passion for keeping a clean dataset so please reach out if you want to 
+help preserve the truth of the data please apply here.
+
