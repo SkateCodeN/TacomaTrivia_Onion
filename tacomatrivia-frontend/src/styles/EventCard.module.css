@@ -1,0 +1,8 @@
+.card {
+  background-color: white; /* Ensures readable dark text */
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
