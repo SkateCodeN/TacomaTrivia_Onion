@@ -8,7 +8,7 @@ export default defineConfig({
     proxy: {
       // Frontend calls /api/* → forwarded to http://localhost:5141/api/*
       '/api': {
-        target: 'http://localhost:5141',
+        target: 'http://localhost:5067',
         changeOrigin: true,
         secure: false,
       },
