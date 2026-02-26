@@ -1,0 +1,15 @@
+.hero {
+  padding: 120px 20px;
+  background: linear-gradient(135deg, #6a0d83, #ce4993);
+  text-align: center;
+}
+
+.title {
+  color: white; /* White on deep purple passes contrast */
+  font-weight: 700;
+}
+
+.subtitle {
+  color: #f8f9fa; /* High contrast soft white */
+  max-width: 600px;
+}
