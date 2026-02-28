@@ -1,12 +1,11 @@
 import { Outlet, NavLink } from 'react-router-dom';
+import AppNavbar from '../../src/components/AppNavBar';
 
 export default function Layout() {
   return (
     <div style={{ maxWidth: 1100, margin: '0 auto', padding: 16 }}>
-      <nav style={{ display: 'flex', gap: 12, padding: '12px 0', borderBottom: '1px solid #eee' }}>
-        <NavLink to="/" end>Home</NavLink>
-        <NavLink to="/venues">Venues</NavLink>
-      </nav>
+  
+      <AppNavbar />
       <main>
         <Outlet />
       </main>
