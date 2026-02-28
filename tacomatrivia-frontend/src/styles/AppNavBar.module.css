@@ -1,0 +1,69 @@
+/* Wrapper makes navbar sticky and accessible */
+.wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: white;
+  border-bottom: 1px solid #eee;
+}
+
+/* Container controls layout */
+/* .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+} */
+
+/* Logo styling */
+.logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: #6a0d83; /* Deep purple ensures strong contrast */
+  cursor: pointer;
+}
+
+/* Desktop links hidden on mobile */
+.desktopLinks {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+
+/* @media (max-width: 768px) {
+  .desktopLinks {
+    display: none;
+    color:red;
+  }
+}  */
+
+/* Desktop nav links */
+.link {
+  font-size: 16px;
+  font-weight: 500;
+  color: #222;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: #ce4993;
+}
+
+/* Mobile nav links */
+.mobileLink {
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+  cursor: pointer;
+}
+
+/* CTA button */
+.cta {
+  background-color: #6a0d83;
+  color: white;
+}
+
+.cta:hover {
+  background-color: #4a065d;
+}
