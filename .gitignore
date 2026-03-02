@@ -51,16 +51,11 @@ coverage/
 
 
 Ignoredappsettings.json
-<<<<<<< HEAD
-Docker/Mock MsSQL/Set up docker ms sql.txt
-Docker/Mock MsSQL/docker-compose.yml
-Docker/Mock MsSQL/init.sql
-tacomatrivia-frontend/src/features/Teams/components/UserSelectWithCreate copy 2.jsx
-tacomatrivia-frontend/src/features/Teams/components/UserSelectWithCreate copy.jsx
-=======
 tacomatrivia-frontend/src/features/Teams/components/UserSelectWithCreate copy 2.jsx
 tacomatrivia-frontend/src/features/Teams/components/UserSelectWithCreate copy.jsx
 Docker/Mock MsSQL/docker-compose.yml
 Docker/Mock MsSQL/init.sql
 Docker/Mock MsSQL/Set up docker ms sql.txt
->>>>>>> feature/Real-PostgresDataMigration
+
+
+# Merge made from feature/Real-PostgresDataMigration. THis should re-kick the ci pipeline.
