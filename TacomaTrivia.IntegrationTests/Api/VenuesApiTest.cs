@@ -40,8 +40,14 @@ public class VenuesApiTests : PostgresFixture
             name = "Alma Mater",
             phone = "253-555-1234",
             address = "1332 Fawcett Ave",
+            allowsPets = true,
             rounds = 5,
-            allowsPets = true
+            triviaDay = 2,
+            triviaStart = new TimeOnly(12,00),
+            website = "www.f.com",
+            allowsKids = false
+            
+            
         };
         var post = await clinet.PostAsJsonAsync("/api/venues", payload);
         Assert.That(post.StatusCode, Is.EqualTo(HttpStatusCode.Created));
@@ -66,7 +72,12 @@ public class VenuesApiTests : PostgresFixture
             phone = "x",
             address = "y",
             rounds = -1,
-            allowsPets = true
+            allowsPets = true,
+             rounds = 5,
+            triviaDay = 2,
+            triviaStart = new TimeOnly(12,00),
+            website = "www.f.com",
+            allowsKids = false
         };
         var put = await client.PutAsJsonAsync($"/api/venues/{id}", bad);
         Assert.That(put.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
