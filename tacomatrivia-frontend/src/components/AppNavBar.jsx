@@ -1,6 +1,7 @@
 // src/components/AppNavbar.jsx
 
 import { useState } from 'react';
+import {Link} from 'react-router-dom'
 import {
     Container,
     Group,
@@ -14,15 +15,15 @@ import {
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import styles from '../styles/AppNavbar.module.css';
-
+import NavAuthComp from './NavAuthComp';
 export default function AppNavbar() {
     const [opened, { toggle, close }] = useDisclosure(false);
 
     const navLinks = (
         <>
-            <Text className={styles.link}>Events</Text>
-            <Text className={styles.link}>Venues</Text>
-            <Text className={styles.link}>Categories</Text>
+            <Link to='venues' className={styles.link}>Venues</Link>
+            <Text className={styles.link}>Teams</Text>
+            <Text className={styles.link}>Docs</Text>
             <Text className={styles.link}>About</Text>
         </>
     );
@@ -41,9 +42,7 @@ export default function AppNavbar() {
                     <Group gap={28} visibleFrom='sm'>
                         {navLinks}
 
-                        <Button radius='xl' className={styles.cta}>
-                            Submit Event
-                        </Button>
+                        <NavAuthComp />
                     </Group>
 
                     {/* Mobile Burger */}
@@ -70,19 +69,12 @@ export default function AppNavbar() {
             >
                 <Stack>
 
-                    <Text className={styles.mobileLink}>Events</Text>
-                    <Text className={styles.mobileLink}>Venues</Text>
-                    <Text className={styles.mobileLink}>Categories</Text>
+                    <Link to='venues' className={styles.link}>Venues</Link>
+                    <Text className={styles.mobileLink}>Teams</Text>
+                    <Text className={styles.mobileLink}>Docs</Text>
                     <Text className={styles.mobileLink}>About</Text>
                     <Collapse in={opened}>
-                        <Button
-                            radius="xl"
-                            fullWidth
-                            className={styles.cta}
-                            mt="md"
-                        >
-                            Submit Event
-                        </Button>
+                        <NavAuthComp />
                     </Collapse>
 
 
