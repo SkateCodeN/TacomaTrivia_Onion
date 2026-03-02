@@ -1,0 +1,19 @@
+#Make sure all the files are here
+00_schema.sql
+01_load_from_csv.sql
+tacoma.csv
+.env 
+
+
+on terminal make sure we are in the directory
+[repo]/DOcker/TT Docker Init
+
+#run 
+
+docker compose up -d
+
+#very helpful command to make sure the image is refreshed
+docker compose build --no-cache postgres
+
+# Stand down composer
+docker compose down -v

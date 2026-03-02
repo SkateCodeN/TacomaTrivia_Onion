@@ -17,6 +17,7 @@ jobs:
       # targeting the .net 8 version 
       - uses: actions/setup-dotnet@v4
         with: { dotnet-version: '8.0.x'}
+<<<<<<< HEAD
       # Do our unit tests w
       - name: Unit Testing
         run: dotnet test ./TacomaTrivia.UnitTests/TacomaTrivia.UnitTests.csproj -c Release  -v minimal 
@@ -24,6 +25,13 @@ jobs:
   integration:
     runs-on: ubuntu-latest
     needs: unit
+=======
+      - run: dotnet restore
+      - run: dotnet build --configuration Release --no-restore -warnaserror
+      - run: dotnet test ./TacomaTrivia.UnitTests/TacomaTrivia.UnitTests.csproj --configuration Release --no-build -v minimal 
+  build-and-test:
+    runs-on: [self-hosted,Windows, Stage]
+>>>>>>> feature/Real-PostgresDataMigration
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4

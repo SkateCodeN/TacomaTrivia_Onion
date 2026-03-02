@@ -12,24 +12,78 @@ public sealed class VenueService(IVenueRepository repo) : IVenueService
     public async Task<IReadOnlyList<VenueDto>> SearchAsync(string? q, int page, int size, CancellationToken ct)
     {
         var items = await _repo.SearchAsync(q, page, size, ct);
-        return items.Select(v => new VenueDto(v.Id, v.Name, v.AllowsPets, v.Rounds, v.Phone, v.Address)).ToList();
+        return items.Select(
+            v => new VenueDto(
+                v.Id,
+                v.Name,
+                v.AllowsPets,
+                v.Rounds,
+                v.Phone,
+                v.Address,
+                v.TriviaDay, 
+                v.TriviaStart, 
+                v.Website, 
+                v.AllowsKids 
+            )
+        ).ToList();
     }
 
     public async Task<VenueDto?> GetByIdAsync(Guid id, CancellationToken ct)
     {
         if (id == Guid.Empty) throw new ArgumentException("Id cannot be empty");
         var v = await _repo.GetByIdAsync(id, ct);
-        return v is null ? null : new VenueDto(v.Id, v.Name, v.AllowsPets, v.Rounds, v.Phone, v.Address);
+        return v is null ? null :
+            new VenueDto(
+                v.Id,
+                v.Name,
+                v.AllowsPets,
+                v.Rounds,
+                v.Phone,
+                v.Address,
+                v.TriviaDay, 
+                v.TriviaStart, 
+                v.Website, 
+                v.AllowsKids 
+            );
     }
 
-    public Task<Guid> CreateAsync(string name, string? phone, string? address, int rounds, bool allowsPets, CancellationToken ct)
-        => _repo.AddAsync(TacomaVenue.Create(name, phone, address, allowsPets, rounds), ct);
+    public Task<Guid> CreateAsync(
+        CreatedVenueRequest createdVenue,
+        CancellationToken ct
+    )
+        => _repo.AddAsync(
+            TacomaVenue.Create(
+                createdVenue.Name,
+                createdVenue.Phone,
+                createdVenue.Address,
+                createdVenue.AllowsPets,
+                createdVenue.Rounds,
+                createdVenue.TriviaDay,
+                createdVenue.TriviaStart,
+                createdVenue.Website,
+                createdVenue.AllowsKids
+            ),
+        ct);
 
-    public async Task UpdateAsync(Guid id, string name, string? phone, string? address, bool allowsPets, int rounds, CancellationToken ct)
+    public async Task UpdateAsync(
+        Guid id,
+        UpdatedVenue updatedVenue,
+        CancellationToken ct
+    )
     {
         if (id == Guid.Empty) throw new ArgumentException("Id cannot be empty");
         var venue = await _repo.GetByIdAsync(id, ct) ?? throw new KeyNotFoundException($"Venue {id} not found");
-        venue.Update(name, phone, address, allowsPets, rounds);
+        venue.Update(
+            updatedVenue.Name,
+            updatedVenue.Phone,
+            updatedVenue.Address,
+            updatedVenue.AllowsPets,
+            updatedVenue.Rounds,
+            updatedVenue.TriviaDay,
+            updatedVenue.TriviaStart,
+            updatedVenue.Website,
+            updatedVenue.AllowsKids
+        );
         await _repo.UpdateAsync(venue, ct);
     }
 

@@ -13,7 +13,10 @@ public sealed class VenuesController(IVenueService svc) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreatedVenueRequest req, CancellationToken ct = default)
     {
-        var id = await _svc.CreateAsync(req.Name, req.Phone, req.Address, req.Rounds, req.AllowsPets, ct);
+        var id = await _svc.CreateAsync(
+            req,
+            ct
+        );
         return CreatedAtRoute("GetVenueById", new { id }, null);
     }
 
@@ -32,7 +35,7 @@ public sealed class VenuesController(IVenueService svc) : ControllerBase
     public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdatedVenue body, CancellationToken ct = default)
     {
         
-        await _svc.UpdateAsync(id, body.Name, body.Phone, body.Address, body.AllowsPets, body.Rounds, ct);
+        await _svc.UpdateAsync(id, body, ct);
         return NoContent();
         
     }

@@ -11,6 +11,7 @@ export const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <Home /> },  // '/'
+      { index: true, element: <Home /> },  // '/'
       { path: 'venues', element: <VenuesListPage /> }
     ],
   },
