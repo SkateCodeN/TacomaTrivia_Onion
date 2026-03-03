@@ -13,6 +13,7 @@ TestResults/
 *.nupkg
 *.snk
 publish/
+wwwroot/
 # EF Core
 Migrations/**/obj/
 Migrations/**/bin/
