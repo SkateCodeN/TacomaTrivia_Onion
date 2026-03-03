@@ -13,7 +13,7 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
 
         b.Entity<TacomaVenue>(e =>
         {
-            e.ToTable("venues");
+            e.ToTable("tacoma");
             e.HasKey(x => x.Id);
             e.Property(x => x.Id).HasColumnName("id");
             e.Property(x => x.Name).HasColumnName("name").IsRequired();
