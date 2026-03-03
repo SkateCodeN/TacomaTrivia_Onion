@@ -115,7 +115,7 @@ jobs:
 
       # ----- Replace running container -----
       - name: Stop old container (ignore if missing)
-        run: docker rm -f tacomatrivia-stage 2>$null || exit 0
+        run: docker rm -f tacomatrivia-stage-app 2>$null || exit 0
 
       # Run new container with environment secrets injected at runtime
       # IMPORTANT:
