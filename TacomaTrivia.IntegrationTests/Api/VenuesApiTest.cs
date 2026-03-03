@@ -73,11 +73,7 @@ public class VenuesApiTests : PostgresFixture
             address = "y",
             rounds = -1,
             allowsPets = true,
-             rounds = 5,
-            triviaDay = 2,
-            triviaStart = new TimeOnly(12,00),
-            website = "www.f.com",
-            allowsKids = false
+            rounds = 5
         };
         var put = await client.PutAsJsonAsync($"/api/venues/{id}", bad);
         Assert.That(put.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
