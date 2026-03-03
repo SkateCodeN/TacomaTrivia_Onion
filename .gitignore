@@ -12,7 +12,7 @@ obj/
 TestResults/
 *.nupkg
 *.snk
-
+publish/
 # EF Core
 Migrations/**/obj/
 Migrations/**/bin/
