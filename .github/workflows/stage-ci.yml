@@ -127,7 +127,7 @@ jobs:
           # Udated str value in env secrets
           DB_CONN: ${{ secrets.POSTGRES_DB_CONNECTIONSTR }}
         run: |
-          docker run -d --name tacomatrivia-stage ^
+          docker run -d --name tacomatrivia-stage-app ^
             -p 5141:5141 ^
             --restart unless-stopped ^
             -e "ConnectionStrings__Postgres=%DB_CONN%" ^
