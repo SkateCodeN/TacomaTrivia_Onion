@@ -5,7 +5,7 @@ services:
       context: ./postgres
       dockerfile: Dockerfile
     image: postgres:latest
-    container_name: Tacoma-Trivia-DB
+    container_name: TacomaTrivia-Venue-Postgres-DB
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -13,7 +13,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "9000:5432"
 
 volumes:
   pgdata:
