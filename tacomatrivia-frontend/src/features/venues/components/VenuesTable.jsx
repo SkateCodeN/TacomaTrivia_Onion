@@ -39,9 +39,7 @@ export default function VenuesTable() {
   return (
     <div>
       <Group justify="space-between" mb="sm" wrap="wrap">
-        <button>
-          Add New
-        </button>
+       
         <Group>
           <TextInput
             leftSection={<IconSearch size={16} />}
@@ -69,7 +67,7 @@ export default function VenuesTable() {
               <Table.Th>Name</Table.Th>
               <Table.Th>Address</Table.Th>
               <Table.Th>Day</Table.Th>
-              <Table.Th>Open</Table.Th>
+              
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
@@ -88,11 +86,7 @@ export default function VenuesTable() {
                 <Table.Td>{v.name}</Table.Td>
                 <Table.Td>{v.address}</Table.Td>
                 <Table.Td>{DayConverter(v.triviaDay)}</Table.Td>
-                <Table.Td>
-                  <Badge color={v.allowsPets || v.isOpen ? 'green' : 'gray'}>
-                    {(v.isOpen ?? v.allowsPets) ? 'Open' : 'Closed'}
-                  </Badge>
-                </Table.Td>
+                
               </Table.Tr>
             ))}
           </Table.Tbody>
