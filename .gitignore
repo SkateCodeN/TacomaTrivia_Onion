@@ -13,6 +13,7 @@ TestResults/
 *.nupkg
 *.snk
 publish/
+wwwroot/
 # EF Core
 Migrations/**/obj/
 Migrations/**/bin/
@@ -57,5 +58,5 @@ Docker/Mock MsSQL/docker-compose.yml
 Docker/Mock MsSQL/init.sql
 Docker/Mock MsSQL/Set up docker ms sql.txt
 
-
+$null
 # Merge made from feature/Real-PostgresDataMigration. THis should re-kick the ci pipeline.

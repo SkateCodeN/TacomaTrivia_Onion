@@ -35,9 +35,9 @@ export default function AppNavbar() {
             <Container size="lg" >
                 {/* Desktop Links */}
                 <Group justify='space-between' h={70}>
-                    <Text className={styles.logo}>
+                    <Link to="/" className={styles.logo}>
                         Tacoma Trivia
-                    </Text>
+                    </Link>
 
                     <Group gap={28} visibleFrom='sm'>
                         {navLinks}
