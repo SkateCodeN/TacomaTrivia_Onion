@@ -6,7 +6,7 @@ export default function FeaturedEvents() {
   return (
     <>
       <Title order={2} mb="lg">
-        Upcoming Trivia Events
+        Upcoming Trivia Events (working on this...)
       </Title>
 
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="lg">

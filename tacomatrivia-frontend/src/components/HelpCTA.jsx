@@ -34,6 +34,13 @@ export default function HelpCTA() {
             </Text>
           </Stack>
         </SimpleGrid>
+        <Container ta="center" mt="xl" >
+          <Text>
+            <a href="mailto:tacomatrivia.com">
+              Email me with your ideas!
+            </a> 
+            </Text>
+        </Container>
       </Container>
     </div>
   );

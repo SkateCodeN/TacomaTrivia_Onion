@@ -13,7 +13,7 @@ export default function Home() {
         <FeaturedEvents />
       </Container>
       <HelpCTA />
-      <NewsletterCTA />
+      {/* <NewsletterCTA /> */}
     </Stack>
   );
 }

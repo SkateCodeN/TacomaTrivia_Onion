@@ -22,9 +22,9 @@ export default function AppNavbar() {
     const navLinks = (
         <>
             <Link to='venues' className={styles.link}>Venues</Link>
-            <Text className={styles.link}>Teams</Text>
-            <Text className={styles.link}>Docs</Text>
-            <Text className={styles.link}>About</Text>
+            <Text className={styles.link} style={{display:"none"}}>Teams</Text>
+            <Text className={styles.link} style={{display:"none"}}>Docs</Text>
+            <Text className={styles.link} style={{display:"none"}}>About</Text>
         </>
     );
 
@@ -42,7 +42,7 @@ export default function AppNavbar() {
                     <Group gap={28} visibleFrom='sm'>
                         {navLinks}
 
-                        <NavAuthComp />
+                        {/* <NavAuthComp /> */}
                     </Group>
 
                     {/* Mobile Burger */}
@@ -70,11 +70,11 @@ export default function AppNavbar() {
                 <Stack>
 
                     <Link to='venues' className={styles.link}>Venues</Link>
-                    <Text className={styles.mobileLink}>Teams</Text>
-                    <Text className={styles.mobileLink}>Docs</Text>
-                    <Text className={styles.mobileLink}>About</Text>
+                    <Text className={styles.mobileLink} style={{display:"none"}}>Teams</Text>
+                    <Text className={styles.mobileLink} style={{display:"none"}}>Docs</Text>
+                    <Text className={styles.mobileLink} style={{display:"none"}}>About</Text>
                     <Collapse in={opened}>
-                        <NavAuthComp />
+                        {/* <NavAuthComp /> */}
                     </Collapse>
 
 

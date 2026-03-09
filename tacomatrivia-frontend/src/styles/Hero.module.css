@@ -13,3 +13,7 @@
   color: #f8f9fa; /* High contrast soft white */
   max-width: 600px;
 }
+
+.link{
+  text-decoration: none;
+}
