@@ -6,7 +6,7 @@ tacoma.csv
 
 
 on terminal make sure we are in the directory
-[repo]/DOcker/TT Docker Init
+[repo]/Docker/Stage Container/postgres/init
 
 #run 
 
