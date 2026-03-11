@@ -12,6 +12,17 @@ public sealed class EfVenueRepository(AppDbContext db) : IVenueRepository
     public Task<TacomaVenue?> GetByIdAsync(Guid id, CancellationToken ct)
         => _db.TacomaVenues.AsNoTracking().FirstOrDefaultAsync(v => v.Id == id, ct);
 
+    // we are specifically targeting days where 1 = Monday, 2 = Tues ...etc
+    public async Task<IReadOnlyList<TacomaVenue>> GetDayList(int day, CancellationToken ct)
+        {
+        var qry = _db.TacomaVenues.AsNoTracking();
+        
+        qry = qry.Where(venue => venue.TriviaDay == day);
+
+        return await qry.OrderBy(v => v.Name)
+                        .ToListAsync(ct);
+    }
+
     public async Task<IReadOnlyList<TacomaVenue>> SearchAsync(string? q, int page, int size, CancellationToken ct)
     {
         var qry = _db.TacomaVenues.AsNoTracking();

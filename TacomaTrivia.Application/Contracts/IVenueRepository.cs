@@ -10,4 +10,5 @@ public interface IVenueRepository
     Task<Guid> AddAsync(TacomaVenue venue, CancellationToken ct);
     Task UpdateAsync(TacomaVenue venue, CancellationToken ct);
     Task<bool> DeleteAsync(Guid id, CancellationToken ct);
+    Task<IReadOnlyList<TacomaVenue>> GetDayList(int day, CancellationToken ct);
 }
