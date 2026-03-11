@@ -62,6 +62,6 @@ public sealed class InMemoryVenueRepository : IVenueRepository
         var list = src.OrderBy(v => v.Name)
                         .ToList()
                         .AsReadOnly();
-        return Task.FromResult((IReadOnlyList<TacomaVenue>) list)
+        return Task.FromResult((IReadOnlyList<TacomaVenue>) list);
     }    
 }
