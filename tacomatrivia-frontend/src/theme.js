@@ -16,6 +16,11 @@ export const theme = createTheme({
       '#ce4993',
       '#6a0d83', // deep purple (safe for white text)
       '#4a065d'
+    ],
+    badgeColor: [
+      'red',
+      'yellow',
+      'green'
     ]
   },
 
