@@ -52,4 +52,14 @@ public sealed class InMemoryVenueRepository : IVenueRepository
 
     public Task<bool> DeleteAsync(Guid id, CancellationToken ct) =>
         Task.FromResult(_store.TryRemove(id, out _));
+
+    public async Task<IReadOnlyList<TacomaVenue>> GetDayList(int day, CancellationToken ct)
+        {
+        IEnumerable<TacomaVenue> src = _store.Values;
+        
+        src = src.Where(venue => venue.TriviaDay == day);
+
+        return await src.OrderBy(v => v.Name)
+                        .ToListAsync(ct);
+    }    
 }
