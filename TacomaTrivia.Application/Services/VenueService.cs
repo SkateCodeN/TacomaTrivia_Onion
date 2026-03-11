@@ -47,6 +47,28 @@ public sealed class VenueService(IVenueRepository repo) : IVenueService
             );
     }
 
+    // Get list of venues based on the given day
+    public async Task<IReadOnlyList<VenueDto>> FilterListByDay(int day, CancellationToken ct)
+    {
+        if (day < 0 || day > 7) throw new ArgumentOutOfRangeException(nameof(day));
+
+        var items = await _repo.GetDayList(day, ct);
+        return items.Select(
+            v => new VenueDto(
+                v.Id,
+                v.Name,
+                v.AllowsPets,
+                v.Rounds,
+                v.Phone,
+                v.Address,
+                v.TriviaDay, 
+                v.TriviaStart, 
+                v.Website, 
+                v.AllowsKids 
+            )
+        ).ToList();
+    }
+
     public Task<Guid> CreateAsync(
         CreatedVenueRequest createdVenue,
         CancellationToken ct

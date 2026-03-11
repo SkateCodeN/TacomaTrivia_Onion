@@ -16,4 +16,6 @@ public interface IVenueService
         CancellationToken ct
     );
     Task DeleteAsync(Guid id, CancellationToken ct);
+
+    Task<IReadOnlyList<VenueDto>> FilterListByDay(int day, CancellationToken ct);
 }
