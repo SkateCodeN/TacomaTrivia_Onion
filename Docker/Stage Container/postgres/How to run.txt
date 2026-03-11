@@ -17,3 +17,11 @@ docker compose build --no-cache postgres
 
 # Stand down composer
 docker compose down -v
+
+in the docker compose file 
+we had the value 
+venue-pg-data:/var/lib/postgresql
+
+in this instance to run it was changed to 
+pgdata:/var/lib/postgresql/data
+Decided to keep the venue-pg-data instead
