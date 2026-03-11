@@ -69,7 +69,7 @@ export default function AppNavbar() {
             >
                 <Stack>
 
-                    <Link to='venues' className={styles.link}>Venues</Link>
+                    <Link to='venues' className={styles.link} onClick={() => opened(false)}>Venues</Link>
                     <Text className={styles.mobileLink} style={{display:"none"}}>Teams</Text>
                     <Text className={styles.mobileLink} style={{display:"none"}}>Docs</Text>
                     <Text className={styles.mobileLink} style={{display:"none"}}>About</Text>
