@@ -128,7 +128,7 @@ jobs:
           DB_CONN: ${{ secrets.POSTGRES_DB_CONNECTIONSTR }}
         run: |
           docker run -d --name tacomatrivia-stage-app ^
-            -p 5141:5141 ^
+            -p 8080:5141 ^
             --restart unless-stopped ^
             -e "ConnectionStrings__Postgres=%DB_CONN%" ^
             tacomatrivia:stage
