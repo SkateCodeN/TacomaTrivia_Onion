@@ -10,6 +10,8 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using TacomaTrivia.Api.Auth;
 using System.Net;
+using Auth0.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,16 +61,41 @@ builder.Services.AddAuthentication(options =>
 // 3. Configure Authorization (Decides what the user can do)
 builder.Services.AddAuthorization(options =>
 {
-    // "ReadOnly" allows both Admin and TestUser to view data
+    // "ReadOnly" allows both Admin and "TestUser" to view data
     options.AddPolicy(AuthConfig.ReadOnlyPolicy, policy =>
         policy.RequireRole(AuthConfig.AdminRole, AuthConfig.TestUserRole));
 
-    // "AdminOnly" strictly requires the Admin role 
+    // "AdminOnly" strictly requires the "Admin" role 
     options.AddPolicy(AuthConfig.AdminPolicy, policy =>
         policy.RequireRole(AuthConfig.AdminRole));
 
 });
 
+
+// Add Auth0 to the pipeline (middleware this is JWT)
+builder.Services.AddAuth0WebAppAuthentication(options =>
+{
+    options.Domain = builder.Configuration["Auth0:Domain"];
+    options.ClientId = builder.Configuration["Auth0:ClientId"];
+    options.ClientSecret = builder.Configuration["Auth0:ClientSecret"];
+
+    // Look for the Role String
+    // options.TokenValidationParameters = new TokenValidationParameters
+    // {
+    //     NameClaimType = "name",
+    //     RoleClaimType = "https://tacomatrivia.com/roles"
+    // };
+});
+
+// Configure the underlying OIDC options separately
+builder.Services.Configure<OpenIdConnectOptions>(Auth0Constants.AuthenticationScheme, options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        NameClaimType = "name",
+        RoleClaimType = "https://tacomatrivia.com/roles"
+    };
+});
 // We confifure Swagger to handle JWT and to test with it
 
 builder.Services.AddSwaggerGen( config =>
