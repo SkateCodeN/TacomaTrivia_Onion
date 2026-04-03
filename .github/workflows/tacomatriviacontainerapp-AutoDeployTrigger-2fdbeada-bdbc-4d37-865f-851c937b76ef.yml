@@ -185,7 +185,7 @@ jobs:
             --resource-group TestingResourceGroup \
             --image ${{ env.IMAGE }} \
             --set-env-vars \
-                "ASPNETCORE_URLS=http://+:8080" |
+                "ASPNETCORE_URLS=http://+:8080" \
                 "Jwt__Key =${{ secrets.JWT_Key}}"
         
 
