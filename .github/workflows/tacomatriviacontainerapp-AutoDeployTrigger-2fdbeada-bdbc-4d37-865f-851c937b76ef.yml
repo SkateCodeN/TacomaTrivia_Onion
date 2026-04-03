@@ -166,7 +166,7 @@ jobs:
       - name: Update Azure Container App
         run: |
           az containerapp update \
-            --name tacomatrivia-dev \
+            --name tt-app-cotainer \
             --resource-group AzureTest-TacomaTriviaApp \
             --image ${{ env.IMAGE }} \
             --set-env-vars "ConnectionStrings__Postgres=${{ secrets.POSTGRES_DB_CONNECTIONSTR }}" \
