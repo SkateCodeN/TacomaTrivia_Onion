@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 [Route("api/auth0")]
 public class Auth0Controller : ControllerBase
 {
+    [HttpGet("login")]
     public async Task Login()
     {
         // Point this to a LOCAL route in this controller, to join our backend

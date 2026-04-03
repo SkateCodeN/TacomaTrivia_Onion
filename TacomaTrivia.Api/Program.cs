@@ -30,7 +30,6 @@ builder.Services.AddScoped<IVenueService, VenueService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 // Auth Middleware
 
