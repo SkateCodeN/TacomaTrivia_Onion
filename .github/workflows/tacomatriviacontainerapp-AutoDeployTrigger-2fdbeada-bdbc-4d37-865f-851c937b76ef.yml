@@ -1,29 +1,146 @@
-name: Trigger auto deployment for tacomatriviacontainerapp
+# name: Trigger auto deployment for tacomatriviacontainerapp
 
-# When this action will be executed
+# # When this action will be executed
+# on:
+#   # Automatically trigger it when detected changes in repo
+#   push:
+#     branches: 
+#       [ stage ]
+#     paths:
+#     - '**'
+#     - '.github/workflows/tacomatriviacontainerapp-AutoDeployTrigger-2fdbeada-bdbc-4d37-865f-851c937b76ef.yml'
+
+#   # Allow manual trigger 
+#   workflow_dispatch:      
+
+# jobs:
+#   build-and-deploy:
+#     runs-on: ubuntu-latest
+#     permissions: 
+#       id-token: write #This is required for requesting the OIDC JWT Token
+#       contents: read #Required when GH token is used to authenticate with private repo
+
+#     steps:
+#       - name: Checkout to the branch
+#         uses: actions/checkout@v2
+
+#       - name: Azure Login
+#         uses: azure/login@v2
+#         with:
+#           client-id: ${{ secrets.TACOMATRIVIACONTAINERAPP_AZURE_CLIENT_ID }}
+#           tenant-id: ${{ secrets.TACOMATRIVIACONTAINERAPP_AZURE_TENANT_ID }}
+#           subscription-id: ${{ secrets.TACOMATRIVIACONTAINERAPP_AZURE_SUBSCRIPTION_ID }}
+
+#       - name: Build and push container image to registry
+#         uses: azure/container-apps-deploy-action@v2
+#         with:
+#           appSourcePath: ${{ github.workspace }}
+#           _dockerfilePathKey_: _dockerfilePath_
+#           _targetLabelKey_: _targetLabel_
+#           registryUrl: 
+#           registryUsername: ${{ secrets.TACOMATRIVIACONTAINERAPP_REGISTRY_USERNAME }}
+#           registryPassword: ${{ secrets.TACOMATRIVIACONTAINERAPP_REGISTRY_PASSWORD }}
+#           containerAppName: tacomatriviacontainerapp
+#           resourceGroup: AzureTest-TacomaTriviaApp
+#           imageToBuild: default/[parameters('containerAppName')]:${{ github.sha }}
+#           _buildArgumentsKey_: |
+#             _buildArgumentsValues_
+
+
+name: dev-azure-deploy
+
 on:
-  # Automatically trigger it when detected changes in repo
   push:
-    branches: 
-      [ stage ]
-    paths:
-    - '**'
-    - '.github/workflows/tacomatriviacontainerapp-AutoDeployTrigger-2fdbeada-bdbc-4d37-865f-851c937b76ef.yml'
+    branches: [dev]
+  workflow_dispatch:
 
-  # Allow manual trigger 
-  workflow_dispatch:      
-
+# ──────────────────────────────────────────────
+# 1) Unit tests (ubuntu, no infra needed)
+# ──────────────────────────────────────────────
 jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Unit Tests
+        run: dotnet test ./TacomaTrivia.UnitTests/TacomaTrivia.UnitTests.csproj -c Release -v minimal
+
+# ──────────────────────────────────────────────
+# 2) Integration tests
+# ──────────────────────────────────────────────
+  integration:
+    runs-on: ubuntu-latest
+    needs: unit
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Integration Tests
+        run: dotnet test ./TacomaTrivia.IntegrationTests/TacomaTrivia.IntegrationTests.csproj -c Release -v minimal
+
+# ──────────────────────────────────────────────
+# 3) Build frontend + backend → Docker → ACR → Container App
+# ──────────────────────────────────────────────
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions: 
-      id-token: write #This is required for requesting the OIDC JWT Token
-      contents: read #Required when GH token is used to authenticate with private repo
+    needs: [unit, integration]
+    permissions:
+      id-token: write   # Required for OIDC Azure login
+      contents: read
 
     steps:
-      - name: Checkout to the branch
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
+      # --- Frontend build ---
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Create wwwroot
+        run: mkdir -p ./TacomaTrivia.Api/wwwroot
+
+      - name: Install frontend dependencies
+        working-directory: ./tacomatrivia-frontend
+        run: npm ci
+
+      - name: Build Vite frontend into API wwwroot
+        working-directory: ./tacomatrivia-frontend
+        run: npm run build -- --outDir ../TacomaTrivia.Api/wwwroot
+
+      # --- Backend publish ---
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Publish .NET API
+        run: |
+          mkdir -p ./publish/Api
+          dotnet restore ./TacomaTrivia.Api/TacomaTrivia.Api.csproj
+          dotnet publish ./TacomaTrivia.Api/TacomaTrivia.Api.csproj \
+            -c Release \
+            -o ./publish/Api
+
+      # Sanity check — fail fast if wwwroot didn't make it into publish output
+      - name: Verify wwwroot present in publish
+        run: |
+          if [ ! -f ./publish/Api/wwwroot/index.html ]; then
+            echo "ERROR: wwwroot/index.html missing from publish output"
+            find ./publish/Api -type f | head -40
+            exit 1
+          fi
+          echo "wwwroot/index.html found — publish looks good"
+
+      # --- Azure login ---
       - name: Azure Login
         uses: azure/login@v2
         with:
@@ -31,19 +148,24 @@ jobs:
           tenant-id: ${{ secrets.TACOMATRIVIACONTAINERAPP_AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.TACOMATRIVIACONTAINERAPP_AZURE_SUBSCRIPTION_ID }}
 
-      - name: Build and push container image to registry
-        uses: azure/container-apps-deploy-action@v2
-        with:
-          appSourcePath: ${{ github.workspace }}
-          _dockerfilePathKey_: _dockerfilePath_
-          _targetLabelKey_: _targetLabel_
-          registryUrl: 
-          registryUsername: ${{ secrets.TACOMATRIVIACONTAINERAPP_REGISTRY_USERNAME }}
-          registryPassword: ${{ secrets.TACOMATRIVIACONTAINERAPP_REGISTRY_PASSWORD }}
-          containerAppName: tacomatriviacontainerapp
-          resourceGroup: AzureTest-TacomaTriviaApp
-          imageToBuild: default/[parameters('containerAppName')]:${{ github.sha }}
-          _buildArgumentsKey_: |
-            _buildArgumentsValues_
+      # --- Build & push to ACR ---
+      - name: Log in to Azure Container Registry
+        run: az acr login --name ${{ secrets.ACR_NAME }}
 
+      - name: Build and push Docker image
+        run: |
+          IMAGE=${{ secrets.ACR_NAME }}.azurecr.io/tacomatrivia:dev-${{ github.sha }}
+          docker build \
+            -t $IMAGE \
+            -f ./TacomaTrivia.Api/Dockerfile.runtime .
+          docker push $IMAGE
+          echo "IMAGE=$IMAGE" >> $GITHUB_ENV
 
+      # --- Deploy to Container App ---
+      - name: Update Azure Container App
+        run: |
+          az containerapp update \
+            --name tacomatrivia-dev \
+            --resource-group AzureTest-TacomaTriviaApp \
+            --image ${{ env.IMAGE }} \
+            --set-env-vars "ConnectionStrings__Postgres=${{ secrets.POSTGRES_DB_CONNECTIONSTR }}"
