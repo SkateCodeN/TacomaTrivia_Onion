@@ -166,7 +166,7 @@ jobs:
       - name: Set ACR credentials on Container App
         run: |
           az containerapp registry set \
-            --name tt-name-cotainer \
+            --name tt-app-cotainer \
             --resource-group TestingResourceGroup \
             --server ${{ secrets.ACR_NAME }}.azurecr.io \
             --username ${{ secrets.ACR_USERNAME }} \
