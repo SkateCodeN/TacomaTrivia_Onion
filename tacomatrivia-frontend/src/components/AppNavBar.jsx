@@ -14,8 +14,8 @@ import {
     Collapse
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import styles from '../styles/AppNavbar.module.css';
-import NavAuthComp from './NavAuthComp';
+import styles from '../styles/AppNavBar.module.css';
+
 export default function AppNavbar() {
     const [opened, { toggle, close }] = useDisclosure(false);
 
