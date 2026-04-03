@@ -186,7 +186,7 @@ jobs:
             --image ${{ env.IMAGE }} \
             --set-env-vars \
                 "ASPNETCORE_URLS=http://+:8080" \
-                "Jwt__Key =${{ secrets.JWT_Key}}"
+                "Jwt__Key=${{ secrets.JWT_Key}}"
         
 
 # I checked the revision the replica is under tt-app-container, should it be under tacomatrivia?
