@@ -162,6 +162,16 @@ jobs:
           docker push $IMAGE
           echo "IMAGE=$IMAGE" >> $GITHUB_ENV
 
+        # connect to ACR via credentials
+      - name: Set ACR credentials on Container App
+        run: |
+          az containerapp registry set \
+            --name tt-name-cotainer \
+            --resource-group TestingResourceGroup \
+            --server ${{ secrets.ACR_NAME }}.azurecr.io \
+            --username ${{ secrets.ACR_USERNAME }} \
+            --password ${{ secrets.ACR_PASSWORD }}
+
       # --- Deploy to Container App ---
       - name: Update Azure Container App
         run: |
@@ -169,5 +179,7 @@ jobs:
             --name tt-app-cotainer \
             --resource-group TestingResourceGroup \
             --image ${{ env.IMAGE }} \
-            --set-env-vars "ConnectionStrings__Postgres=${{ secrets.POSTGRES_DB_CONNECTIONSTR }}" \
-                            "ASPNETCORE_URLS=http://+:8080"
+            --set-env-vars |
+              "ConnectionStrings__Postgres=${{ secrets.POSTGRES_DB_CONNECTIONSTR }}" \
+              "ASPNETCORE_URLS=http://+:8080"
+        
