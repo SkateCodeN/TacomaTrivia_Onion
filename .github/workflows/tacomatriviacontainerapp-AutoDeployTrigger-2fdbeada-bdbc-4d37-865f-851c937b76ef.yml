@@ -144,9 +144,9 @@ jobs:
       - name: Azure Login
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.tt-app-cotainer_AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.tt-app-cotainer_AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.tt-app-cotainer_AZURE_SUBSCRIPTION_ID }}
+          client-id: ${{ secrets.TTAPPCOTAINER_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.TTAPPCOTAINER_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.TTAPPCOTAINER_AZURE_SUBSCRIPTION_ID }}
 
       # --- Build & push to ACR ---
       - name: Log in to Azure Container Registry
