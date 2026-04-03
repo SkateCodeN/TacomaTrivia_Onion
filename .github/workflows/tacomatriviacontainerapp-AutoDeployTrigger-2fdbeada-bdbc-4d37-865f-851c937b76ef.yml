@@ -179,6 +179,5 @@ jobs:
             --name tt-app-cotainer \
             --resource-group TestingResourceGroup \
             --image ${{ env.IMAGE }} \
-            --set-env-vars |
-              "ASPNETCORE_URLS=http://+:8080"
+            --set-env-vars "ASPNETCORE_URLS=http://+:8080"
         
