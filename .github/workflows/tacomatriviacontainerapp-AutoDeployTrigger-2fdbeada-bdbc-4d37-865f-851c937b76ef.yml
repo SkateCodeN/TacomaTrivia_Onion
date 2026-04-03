@@ -162,6 +162,10 @@ jobs:
           docker push $IMAGE
           echo "IMAGE=$IMAGE" >> $GITHUB_ENV
 
+           # Debug to console to see image name 
+      - name: Debug image name
+        run: echo "Image is ${{ env.IMAGE }}"
+        
         # connect to ACR via credentials
       - name: Set ACR credentials on Container App
         run: |
@@ -172,6 +176,7 @@ jobs:
             --username ${{ secrets.ACR_USERNAME }} \
             --password ${{ secrets.ACR_PASSWORD }}
 
+       
       # --- Deploy to Container App ---
       - name: Update Azure Container App
         run: |
