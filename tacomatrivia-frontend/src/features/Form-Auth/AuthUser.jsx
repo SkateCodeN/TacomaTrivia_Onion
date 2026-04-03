@@ -10,6 +10,7 @@ import {
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Auth0User from './Auth0User';
 
 export default function AuthUser() {
     const [test1, setTest1] = useState('');
@@ -80,6 +81,9 @@ export default function AuthUser() {
 
     }
 
+    const handleAuthLogout = () => {
+        window.location.href = '/api/auth0/logout';
+    }
     const handleLogout = () => {
 
         //Remove the token from storages
@@ -125,6 +129,11 @@ export default function AuthUser() {
             </Group>
             <Group justify='center'>
                 <Button onClick={handleLogout}>Logout</Button>
+                <Button onClick={handleAuthLogout}>Auth0 Logout</Button>
+            </Group>
+
+            <Group p="lg">
+                <Auth0User />
             </Group>
         </Container>
     )
