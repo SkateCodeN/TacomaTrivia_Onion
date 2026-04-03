@@ -149,6 +149,7 @@ jobs:
           subscription-id: ${{ secrets.TTAPPCOTAINER_AZURE_SUBSCRIPTION_ID }}
 
       # --- Build & push to ACR ---
+        # added acr in gui and the secret name in github
       - name: Log in to Azure Container Registry
         run: az acr login --name ${{ secrets.ACR_NAME }}
 
