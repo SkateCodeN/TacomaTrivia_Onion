@@ -35,41 +35,41 @@ builder.Services.AddSwaggerGen();
 // Auth Middleware
 
 // 1. Get secret key from Config (User Secrets / Env vars -- This is for when it goes to server)
-// var jwtKey = builder.Configuration["Jwt:Key"] ?? "Temp";
-// var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
+var jwtKey = builder.Configuration["Jwt:Key"] ?? "Temp";
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
 
 // 2. Configure Auth (Id who the user is)
-// builder.Services.AddAuthentication(options =>
-// {
-//     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-// })
-// .AddJwtBearer(options =>
-// {
-//     options.TokenValidationParameters = new TokenValidationParameters
-//     {
-//         ValidateIssuer = true,
-//         ValidIssuer = "tacomatrivia.com",
-//         ValidateAudience = true,
-//         ValidAudience = "tacomatrivia.com",
-//         ValidateIssuerSigningKey = true,
-//         IssuerSigningKey = key,
-//         ValidateLifetime = true
-//     };
-// });
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidIssuer = "tacomatrivia.com",
+        ValidateAudience = true,
+        ValidAudience = "tacomatrivia.com",
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = key,
+        ValidateLifetime = true
+    };
+});
 
 // 3. Configure Authorization (Decides what the user can do)
-// builder.Services.AddAuthorization(options =>
-// {
-//     // "ReadOnly" allows both Admin and "TestUser" to view data
-//     options.AddPolicy(AuthConfig.ReadOnlyPolicy, policy =>
-//         policy.RequireRole(AuthConfig.AdminRole, AuthConfig.TestUserRole));
+builder.Services.AddAuthorization(options =>
+{
+    // "ReadOnly" allows both Admin and "TestUser" to view data
+    options.AddPolicy(AuthConfig.ReadOnlyPolicy, policy =>
+        policy.RequireRole(AuthConfig.AdminRole, AuthConfig.TestUserRole));
 
-//     // "AdminOnly" strictly requires the "Admin" role 
-//     options.AddPolicy(AuthConfig.AdminPolicy, policy =>
-//         policy.RequireRole(AuthConfig.AdminRole));
+    // "AdminOnly" strictly requires the "Admin" role 
+    options.AddPolicy(AuthConfig.AdminPolicy, policy =>
+        policy.RequireRole(AuthConfig.AdminRole));
 
-// });
+});
 
 
 // Add Auth0 to the pipeline (middleware this is JWT)
@@ -91,22 +91,22 @@ builder.Services.AddSwaggerGen();
 // });
 // We confifure Swagger to handle JWT and to test with it
 
-// builder.Services.AddSwaggerGen( config =>
-// {
-//     config.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme {
-//         Name = "Authorization",
-//         Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
-//         Scheme = "Bearer",
-//         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-//         Description = "Paste JWT Token here"
-//     });
+builder.Services.AddSwaggerGen( config =>
+{
+    config.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme {
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "Paste JWT Token here"
+    });
 
-//     config.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement {
-//         { new Microsoft.OpenApi.Models.OpenApiSecurityScheme { 
-//             Reference = new Microsoft.OpenApi.Models.OpenApiReference { Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme, Id = "Bearer" }
-//         }, Array.Empty<string>() }
-//     });
-// });
+    config.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement {
+        { new Microsoft.OpenApi.Models.OpenApiSecurityScheme { 
+            Reference = new Microsoft.OpenApi.Models.OpenApiReference { Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme, Id = "Bearer" }
+        }, Array.Empty<string>() }
+    });
+});
 
 var app = builder.Build();
 
