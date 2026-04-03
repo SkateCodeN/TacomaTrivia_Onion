@@ -180,6 +180,5 @@ jobs:
             --resource-group TestingResourceGroup \
             --image ${{ env.IMAGE }} \
             --set-env-vars |
-              "ConnectionStrings__Postgres=${{ secrets.POSTGRES_DB_CONNECTIONSTR }}" \
               "ASPNETCORE_URLS=http://+:8080"
         
