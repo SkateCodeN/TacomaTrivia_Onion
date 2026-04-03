@@ -144,9 +144,9 @@ jobs:
       - name: Azure Login
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.TACOMATRIVIACONTAINERAPP_AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.TACOMATRIVIACONTAINERAPP_AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.TACOMATRIVIACONTAINERAPP_AZURE_SUBSCRIPTION_ID }}
+          client-id: ${{ secrets.tt-app-cotainer_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.tt-app-cotainer_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.tt-app-cotainer_AZURE_SUBSCRIPTION_ID }}
 
       # --- Build & push to ACR ---
       - name: Log in to Azure Container Registry
@@ -168,4 +168,5 @@ jobs:
             --name tacomatrivia-dev \
             --resource-group AzureTest-TacomaTriviaApp \
             --image ${{ env.IMAGE }} \
-            --set-env-vars "ConnectionStrings__Postgres=${{ secrets.POSTGRES_DB_CONNECTIONSTR }}"
+            --set-env-vars "ConnectionStrings__Postgres=${{ secrets.POSTGRES_DB_CONNECTIONSTR }}" \
+                            "ASPNETCORE_URLS=http://+:8080"
