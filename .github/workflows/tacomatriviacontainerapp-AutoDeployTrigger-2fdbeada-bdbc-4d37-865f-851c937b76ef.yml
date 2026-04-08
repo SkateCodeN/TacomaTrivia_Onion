@@ -185,7 +185,7 @@ jobs:
             --resource-group TestingResourceGroup \
             --image ${{ env.IMAGE }} \
             --set-env-vars \
-                "ConnectionStrings__Postgres=${{secrets.Azure_PG_Venues_ConStr}}"
+                "ConnectionStrings__Postgres=${{secrets.Azure_PG_Venues_ConStr}}" \
                 "ASPNETCORE_URLS=http://+:8080" \
                 "Jwt__Key=${{ secrets.JWT_Key}}"
         
