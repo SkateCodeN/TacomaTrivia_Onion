@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using TacomaTrivia.Application.Models;
 using TacomaTrivia.Application.Services;
+using Microsoft.AspNetCore.Authorization;
+
+using TacomaTrivia.Api.Auth;
 
 namespace TacomaTrivia.Api.Controllers;
 
@@ -11,6 +14,7 @@ public sealed class VenuesController(IVenueService svc) : ControllerBase
     private readonly IVenueService _svc = svc;
 
     [HttpPost]
+    [Authorize(Policy = AuthConfig.ReadOnlyPolicy)]
     public async Task<IActionResult> Create([FromBody] CreatedVenueRequest req, CancellationToken ct = default)
     {
         var id = await _svc.CreateAsync(
@@ -39,6 +43,7 @@ public sealed class VenuesController(IVenueService svc) : ControllerBase
         => _svc.SearchAsync(q, page, pageSize, ct);
 
     [HttpPut("{id:guid}")]
+    [Authorize(Policy = AuthConfig.ReadOnlyPolicy)]
     public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdatedVenue body, CancellationToken ct = default)
     {
         
@@ -48,6 +53,7 @@ public sealed class VenuesController(IVenueService svc) : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Policy = AuthConfig.ReadOnlyPolicy)]
     public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken ct = default)
     {
         await _svc.DeleteAsync(id, ct);
