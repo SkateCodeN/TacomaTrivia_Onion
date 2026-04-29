@@ -51,7 +51,7 @@ name: dev-azure-deploy
 
 on:
   push:
-    branches: [dev]
+    branches: [none]
   workflow_dispatch:
 
 # ──────────────────────────────────────────────
