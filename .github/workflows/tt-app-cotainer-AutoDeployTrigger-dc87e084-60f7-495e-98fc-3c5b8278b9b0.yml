@@ -5,7 +5,7 @@ on:
   # Automatically trigger it when detected changes in repo
   push:
     branches: 
-      [ dev ]
+      [ none ]
     paths:
     - '**'
     - '.github/workflows/tt-app-cotainer-AutoDeployTrigger-dc87e084-60f7-495e-98fc-3c5b8278b9b0.yml'
