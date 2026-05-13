@@ -36,7 +36,6 @@ public sealed class VenuesController(IVenueService svc) : ControllerBase
     public async Task<IReadOnlyList<VenueDto>> GetListByDay([FromRoute] int day, CancellationToken ct = default)
         => await _svc.FilterListByDay(day, ct);
         
-    
 
     [HttpGet]
     public Task<IReadOnlyList<VenueDto>> Get([FromQuery] string? q, [FromQuery] int page = 1, [FromQuery] int pageSize = 25, CancellationToken ct = default)
