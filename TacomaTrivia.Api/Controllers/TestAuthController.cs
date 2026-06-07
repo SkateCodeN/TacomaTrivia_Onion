@@ -51,6 +51,8 @@ public class TestAuthController : ControllerBase
     // V2 as we integrate user submitting a username, pass to auth internally via
     // the db
 
+    // UserDto to be used internally when 
+    // we get data from the db o
     public class User
     {
         public string Email {get; set;}

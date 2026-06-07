@@ -4,14 +4,16 @@ import {
     Button,
     Title
 } from '@mantine/core';
+import axios from 'axios';
 import LoginForm from "./LoginForm";
-export default function LoginPage() 
-{
-    const handleClick = () =>{
-        window.location.href ='http://localhost:5067/api/auth0';
+export default function LoginPage() {
+       
+  
+    const handleClick = () => {
+        window.location.href ='/api/auth0/login';
     }
-    return(
-        <Container  p="lg" size={500}>
+    return (
+        <Container p="lg" size={500}>
             <LoginForm />
 
             <Stack p="lg">
@@ -20,6 +22,6 @@ export default function LoginPage()
             </Stack>
         </Container>
 
-        
+
     );
 }

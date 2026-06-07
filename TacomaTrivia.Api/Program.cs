@@ -72,22 +72,22 @@ builder.Services.AddAuthorization(options =>
 
 
 // Add Auth0 to the pipeline (middleware this is JWT)
-// builder.Services.AddAuth0WebAppAuthentication(options =>
-// {
-//     options.Domain = builder.Configuration["Auth0:Domain"];
-//     options.ClientId = builder.Configuration["Auth0:ClientId"];
-//     options.ClientSecret = builder.Configuration["Auth0:ClientSecret"];
-// });
+builder.Services.AddAuth0WebAppAuthentication(options =>
+{
+    options.Domain = builder.Configuration["Auth0:Domain"];
+    options.ClientId = builder.Configuration["Auth0:ClientId"];
+    options.ClientSecret = builder.Configuration["Auth0:ClientSecret"];
+});
 
 // Configure the underlying OIDC options separately
-// builder.Services.Configure<OpenIdConnectOptions>(Auth0Constants.AuthenticationScheme, options =>
-// {
-//     options.TokenValidationParameters = new TokenValidationParameters
-//     {
-//         NameClaimType = "name",
-//         RoleClaimType = "https://tacomatrivia.com/roles"
-//     };
-// });
+builder.Services.Configure<OpenIdConnectOptions>(Auth0Constants.AuthenticationScheme, options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        NameClaimType = "name",
+        RoleClaimType = "https://tacomatrivia.com/roles"
+    };
+});
 // We confifure Swagger to handle JWT and to test with it
 
 builder.Services.AddSwaggerGen( config =>

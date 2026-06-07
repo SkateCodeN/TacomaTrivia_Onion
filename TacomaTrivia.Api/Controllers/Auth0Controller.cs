@@ -7,6 +7,7 @@ using System.Text;
 using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 [ApiController]
 [Route("api/auth0")]
@@ -21,7 +22,6 @@ public class Auth0Controller : ControllerBase
         // route is active as we have react being compiled and served via this 
         // backend application
         var returnUrl = Url.Action("AuthCallback");
-        var testRole = "Mod";
         var authenticationProperties = new LoginAuthenticationPropertiesBuilder()
             .WithRedirectUri(returnUrl)
             .Build();
@@ -94,4 +94,5 @@ public class Auth0Controller : ControllerBase
 
         await HttpContext.ChallengeAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
     }
+
 }
