@@ -1,18 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.ComponentModel.DataAnnotations;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
+
 
 [ApiController]
 [Route("api/auth0")]
 public class Auth0Controller : ControllerBase
 {
+    private readonly ILogger log;
+     public Auth0Controller(ILogger logger)
+    {
+        log = logger;
+    }
     [HttpGet("login")]
     public async Task Login()
     {
@@ -26,6 +26,7 @@ public class Auth0Controller : ControllerBase
             .WithRedirectUri(returnUrl)
             .Build();
 
+        log.LogInformation("started challenge");
 
         await HttpContext.ChallengeAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
     }
@@ -33,14 +34,13 @@ public class Auth0Controller : ControllerBase
     [HttpGet("callback-final")]
     public IActionResult AuthCallback()
     {
+        log.LogInformation("Redirected to frontend");
         // This is where you hardcode (or pull from config) your React URL
         // .NET's "Redirect" method handles absolute URLs perfectly
         return Redirect("http://localhost:5173/auth/user");
     }
 
-
-
-     [HttpGet("logout")]
+    [HttpGet("logout")]
     public async Task Logout()
     {
         var logoutRedirect = Url.Action("LogoutCallback");
