@@ -4,11 +4,23 @@ import { IconSearch, IconRefresh } from '@tabler/icons-react';
 import RowsPerPageSelect from '@shared/ui/RowsPerPageSelect.jsx';
 import useDebounce from '@shared/hooks/useDebounce.js';
 import { venuesApi } from '../api/venuesApi.js';
-import DayConverter from '../helper functions/DayConverter.js';
+import {DayConverter} from '../helper functions/DayConverter.js';
+import CreateVenueDialog from './CreateVenueDialog.jsx';
+import OpenDeleteRequest from './OpenDeleteRequest.jsx';
+import VenueDialog from './VenueDialog.jsx'
+
 
 export default function VenuesTable() {
   const [rows, setRows] = useState([]);
   const [total, setTotal] = useState(undefined);
+
+  // To handle the opening of the modal
+  const[open, setOpen] = useState(false);
+  // Handle the open and clode of the delete dialog
+  const [openDelete, setOpenDelete] = useState(false);
+
+  const [openEdit, setOpenEdit] = useState(false);
+  const [rowData,setRowData] = useState([]);
 
   const [q, setQ] = useState('');
   const dq = useDebounce(q, 350);
@@ -35,11 +47,16 @@ export default function VenuesTable() {
   };
 
   useEffect(() => { fetchData(); }, [dq, page, pageSize]);
-
+  
+  const rehydrate = () =>{
+    fetchData()
+  }
   return (
     <div>
       <Group justify="space-between" mb="sm" wrap="wrap">
-       
+        <Button onClick={() => setOpen(true)}>
+          Add New
+        </Button>
         <Group>
           <TextInput
             leftSection={<IconSearch size={16} />}
@@ -67,7 +84,8 @@ export default function VenuesTable() {
               <Table.Th>Name</Table.Th>
               <Table.Th>Address</Table.Th>
               <Table.Th>Day</Table.Th>
-              
+              <Table.Th>Pets</Table.Th>
+              <Table.Th>Action</Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
@@ -86,7 +104,31 @@ export default function VenuesTable() {
                 <Table.Td>{v.name}</Table.Td>
                 <Table.Td>{v.address}</Table.Td>
                 <Table.Td>{DayConverter(v.triviaDay)}</Table.Td>
-                
+                <Table.Td>
+                  <Badge color={v.allowsPets ? 'green' : 'gray'}>
+                    {(v.allowsPets) ? 'Yes' : 'No'}
+                  </Badge>
+                </Table.Td>
+                <Table.Td>
+                  <div style={{display:"flex", justifyContent:"space-around"}}>
+                    <Button 
+                      color='yellow'
+                      onClick={() => {
+                        setRowData(v);
+                        setOpenEdit(true)
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button 
+                      color='red'
+                      onClick={() => setOpenDelete(true)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                  
+                </Table.Td>
               </Table.Tr>
             ))}
           </Table.Tbody>
@@ -109,6 +151,23 @@ export default function VenuesTable() {
           </Button>
         </Group>
       </Group>
+
+      <CreateVenueDialog 
+        opened={open}
+        onClose={() => setOpen(false)}
+      />
+
+      <OpenDeleteRequest
+        opened={openDelete}
+        onClose={() => setOpenDelete(false)}
+      />
+
+      <VenueDialog 
+        opened={openEdit}
+        onClose={() => setOpenEdit(false)}
+        rowData = {rowData}
+        onCreated = {rehydrate}
+      />
     </div>
   );
 }

@@ -1,7 +1,7 @@
-export default function DayConverter(dayAsInteger){
+export function DayConverter(dayAsInteger){
     switch(dayAsInteger){
         case null:
-            return "No DB data"
+            return ""
         case 0: 
             return "Sunday";
         case 1: 
@@ -16,6 +16,28 @@ export default function DayConverter(dayAsInteger){
             return "Friday";
         case 6:
             return "Saturday"
+        default:
+            return "Error in interger passed to function"
+    }
+}
+
+export function ConvertDayToNumber(dayAsInteger){
+    switch(dayAsInteger){
+        
+        case "Sunday": 
+            return '0';
+        case "Monday": 
+            return '1';
+        case "Tuesday": 
+            return '2';
+        case "Wednesday":
+            return '3';
+        case "Thurday":
+            return '4';
+        case "Friday":
+            return '5';
+        case "Saturday":
+            return '6';
         default:
             return "Error in interger passed to function"
     }
