@@ -1,7 +1,7 @@
 // src/components/EventCard.jsx
 import { Card, Text, Badge, Group, Button } from '@mantine/core';
 import styles from '../styles/EventCard.module.css';
-import DayConverter from '@features/venues/helper functions/DayConverter';
+import {DayConverter} from '@features/venues/helper functions/DayConverter';
 import TimeConverter from '@features/venues/helper functions/TimeConverter';
 import CompareDateTime from '@features/venues/helper functions/CompareDateTime';
 import { useEffect, useState } from 'react';

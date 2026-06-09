@@ -3,7 +3,7 @@ import { Title, SimpleGrid } from '@mantine/core';
 import { useEffect,useState } from 'react';
 import EventCard from './EventCard';
 import axios from 'axios';
-import DayConverter from '@features/venues/helper functions/DayConverter';
+import {DayConverter} from '@features/venues/helper functions/DayConverter';
 export default function FeaturedEvents() {
   const [venues, setVenues] = useState([]);
   const [day, setDay] = useState("");

@@ -42,3 +42,4 @@ export function ConvertDayToNumber(dayAsInteger){
             return "Error in interger passed to function"
     }
 }
+
