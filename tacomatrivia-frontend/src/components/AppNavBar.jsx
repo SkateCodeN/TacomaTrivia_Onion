@@ -16,6 +16,7 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import styles from '../styles/AppNavbar.module.css';
 import NavAuthComp from './NavAuthComp';
+import { ColorSchemeToggle } from '../providers/Providers';
 export default function AppNavbar() {
     const [opened, { toggle, close }] = useDisclosure(false);
 
@@ -41,6 +42,7 @@ export default function AppNavbar() {
 
                     <Group gap={28} visibleFrom='sm'>
                         {navLinks}
+                        <ColorSchemeToggle />
 
                         {/* <NavAuthComp /> */}
                     </Group>
@@ -73,6 +75,9 @@ export default function AppNavbar() {
                     <Text className={styles.mobileLink} style={{display:"none"}}>Teams</Text>
                     <Text className={styles.mobileLink} style={{display:"none"}}>Docs</Text>
                     <Text className={styles.mobileLink} style={{display:"none"}}>About</Text>
+                    <Group>
+                        <ColorSchemeToggle />
+                    </Group>
                     <Collapse in={opened}>
                         {/* <NavAuthComp /> */}
                     </Collapse>
