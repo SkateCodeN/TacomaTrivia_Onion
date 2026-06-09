@@ -30,7 +30,6 @@ builder.Services.AddScoped<IVenueService, VenueService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 // Auth Middleware
 
@@ -78,13 +77,6 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
     options.Domain = builder.Configuration["Auth0:Domain"];
     options.ClientId = builder.Configuration["Auth0:ClientId"];
     options.ClientSecret = builder.Configuration["Auth0:ClientSecret"];
-
-    // Look for the Role String
-    // options.TokenValidationParameters = new TokenValidationParameters
-    // {
-    //     NameClaimType = "name",
-    //     RoleClaimType = "https://tacomatrivia.com/roles"
-    // };
 });
 
 // Configure the underlying OIDC options separately

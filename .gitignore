@@ -57,7 +57,7 @@ tacomatrivia-frontend/src/features/Teams/components/UserSelectWithCreate copy.js
 Docker/Mock MsSQL/docker-compose.yml
 Docker/Mock MsSQL/init.sql
 Docker/Mock MsSQL/Set up docker ms sql.txt
-
+words.txt
 $null
 # Merge made from feature/Real-PostgresDataMigration. THis should re-kick the ci pipeline.
 

@@ -59,12 +59,22 @@ export default function LoginForm() {
         }
     }
 
+     const handleAuth0Click = () => {
+        window.location.href ='/api/auth0/login';
+    }
+
     return (
         <Paper radius='md' p='lg' withBorder >
-            <Text size='lg' fw={500} c="bright">
+            <Group justify="space-between">
+                <Text size='lg' fw={500} c="bright">
                 Login To Tacoma Trivia
             </Text>
 
+            <Button radius="xl" color="brand.8" onClick={handleAuth0Click} >
+                Auth0
+            </Button>
+            </Group>
+            
             <Divider my='lg' />
 
             <form onSubmit={form.onSubmit(handleSubmit)}>
@@ -119,6 +129,7 @@ export default function LoginForm() {
                         {upperFirst(type)}
                     </Button>
                 </Group>
+                
             </form>
         </Paper>
     );

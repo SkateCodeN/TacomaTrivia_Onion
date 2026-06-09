@@ -23,6 +23,7 @@ export default function AppNavbar() {
     const navLinks = (
         <>
             <Link to='venues' className={styles.link}>Venues</Link>
+            <Link to='login' Text className={styles.link} >Login</Link>
             <Text className={styles.link} style={{display:"none"}}>Teams</Text>
             <Text className={styles.link} style={{display:"none"}}>Docs</Text>
             <Text className={styles.link} style={{display:"none"}}>About</Text>
